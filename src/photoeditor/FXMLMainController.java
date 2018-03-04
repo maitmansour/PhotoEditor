@@ -29,10 +29,12 @@ public class FXMLMainController implements Initializable {
                 File selectedDirectory =  directoryChooser.showDialog(null);
                 
                 if(selectedDirectory == null){
-                    selectedDirectoryText.setText("No Directory selected");
+                   // selectedDirectoryText.setText("No Directory selected");
+                    System.out.println("No Directory selected");
                 }else{
                     String path=selectedDirectory.getAbsolutePath();
-                    selectedDirectoryText.setText(path);
+                   // selectedDirectoryText.setText(path);
+                    System.out.println(path);
                 }
     }
     
