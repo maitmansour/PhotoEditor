@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLUpdatePictureController">
-    
+<AnchorPane id="AnchorPane" prefHeight="478.0" prefWidth="543.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLUpdatePictureController">
+   <children>
+      <Label layoutX="36.0" layoutY="40.0" prefHeight="64.0" prefWidth="124.0" text="Title :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="153.0" prefHeight="64.0" prefWidth="124.0" text="Tags :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+      </Label>
+      <TextField layoutX="160.0" layoutY="45.0" prefHeight="44.0" prefWidth="352.0" promptText="Picture Title" />
+      <TextArea layoutX="151.0" layoutY="172.0" prefHeight="200.0" prefWidth="368.0" promptText="Picture Tags" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="185.0" layoutY="401.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/update.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="256.0" layoutY="401.0" prefHeight="44.0" prefWidth="70.0" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <Button fx:id="saveButton" layoutX="168.0" layoutY="398.0" mnemonicParsing="false" onAction="#saveHandler" prefHeight="57.0" prefWidth="224.0" style="-fx-background-color: transparent;" />
+   </children>
 </AnchorPane>

@@ -23,10 +23,16 @@
  */
 package photoeditor;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
@@ -34,6 +40,16 @@ import javafx.fxml.Initializable;
  */
 public class FXMLUpdatePictureController implements Initializable {
 
+ @FXML 
+ private javafx.scene.control.Button saveButton;
+       
+        
+    @FXML
+    private void saveHandler(ActionEvent event) throws IOException {
+    Stage stage = (Stage) saveButton.getScene().getWindow();
+    stage.close();
+        
+    }
     /**
      * Initializes the controller class.
      */
