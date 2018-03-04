@@ -31,39 +31,61 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import java.io.File;
+import java.io.IOException;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+
 /**
  *
  * @author Mohamed AIT MANSOUR <contact@numidea.com>
  */
 public class FXMLMainController implements Initializable {
-    
+
+    private static final String FILE_TEXT_EXT = ".jpg";
+
+
     @FXML
     private Label selectedDirectoryText;
-    
+
     @FXML
-    private void selectDirectoryHandler(MouseEvent event) {
+    private void selectDirectoryHandler(MouseEvent event) throws IOException {
         // TODO : Path not showing correctely
-         DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedDirectory =  directoryChooser.showDialog(null);
-                
-                if(selectedDirectory == null){
-                   // selectedDirectoryText.setText("No Directory selected");
-                    System.out.println("No Directory selected");
-                }else{
-                    String path=selectedDirectory.getAbsolutePath();
-                   // selectedDirectoryText.setText(path);
-                    System.out.println(path);
-                }
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        if (selectedDirectory == null) {
+            // selectedDirectoryText.setText("No Directory selected");
+            System.out.println("No Directory selected");
+        } else {
+            FindCertainExtension isExtensionFounded = new FindCertainExtension();
+            String path = selectedDirectory.getAbsolutePath();
+            if (isExtensionFounded.checkFileExistence(path, FILE_TEXT_EXT)) {
+                app_stage.hide(); //optional
+                app_stage.setScene(home_page_scene);
+                app_stage.show();
+            }else{
+            // selectedDirectoryText.setText("No Image founded");
+
+            }
+           
+        }
     }
-    
+
     @FXML
     private void closeHandler(MouseEvent event) {
         System.exit(0);
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
