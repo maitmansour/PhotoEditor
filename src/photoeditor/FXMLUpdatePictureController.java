@@ -23,50 +23,17 @@
  */
 package photoeditor;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
+
 /**
  * FXML Controller class
  *
  * @author Mohamed AIT MANSOUR <contact@numidea.com>
  */
-public class FXMLHomeController implements Initializable {
+public class FXMLUpdatePictureController implements Initializable {
 
-    
-    @FXML
-    private Label titleLabel;
-    private Locale locale;
-    private ResourceBundle bundle;
-    
-    
-    
-    
-    @FXML
-    private void langFrChoosed(MouseEvent event) {
-        //loadLang("fr");
-        titleLabel.setText("Titre :");
-    }
-
-    @FXML
-    private void updateHandler(ActionEvent event)  throws IOException  {
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"));
-                Parent rootWindow = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(rootWindow));  
-                stage.show();
-    }
     /**
      * Initializes the controller class.
      */
@@ -74,14 +41,5 @@ public class FXMLHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
-    
-    private void loadLang(String lang){
-        // TODO : Complete internationnalization
-        locale = new Locale(lang);
-        bundle = ResourceBundle.getBundle("bundles.lang", locale);
-        titleLabel.setText(bundle.getString("selectedDirectoryText"));
-        
-    }
     
 }

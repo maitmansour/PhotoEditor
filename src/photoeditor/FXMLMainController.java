@@ -56,9 +56,8 @@ public class FXMLMainController implements Initializable {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(null);
 
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"));
+       Parent rootWindow = (Parent) fxmlLoader.load();
         if (selectedDirectory == null) {
             selectedDirectoryText.setText("No Directory selected");
             System.out.println("No Directory selected");
@@ -66,9 +65,13 @@ public class FXMLMainController implements Initializable {
             FindCertainExtension isExtensionFounded = new FindCertainExtension();
             String path = selectedDirectory.getAbsolutePath();
             if (isExtensionFounded.checkFileExistence(path, FILE_TEXT_EXT)) {
-                app_stage.hide(); //optional
-                app_stage.setScene(home_page_scene);
-                app_stage.show();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(rootWindow)); 
+                Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                app_stage.hide();
+                stage.show();
+                
             }else{
              selectedDirectoryText.setText("No Image founded");
 
