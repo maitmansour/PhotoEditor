@@ -25,7 +25,6 @@ package photoeditor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -61,7 +60,7 @@ public class FXMLMainController implements Initializable {
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         if (selectedDirectory == null) {
-            // selectedDirectoryText.setText("No Directory selected");
+            selectedDirectoryText.setText("No Directory selected");
             System.out.println("No Directory selected");
         } else {
             FindCertainExtension isExtensionFounded = new FindCertainExtension();
@@ -71,7 +70,7 @@ public class FXMLMainController implements Initializable {
                 app_stage.setScene(home_page_scene);
                 app_stage.show();
             }else{
-            // selectedDirectoryText.setText("No Image founded");
+             selectedDirectoryText.setText("No Image founded");
 
             }
            

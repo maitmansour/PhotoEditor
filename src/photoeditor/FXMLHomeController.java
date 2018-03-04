@@ -24,15 +24,37 @@
 package photoeditor;
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-
+import javafx.scene.control.Label;
+import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
  * @author Mohamed AIT MANSOUR <contact@numidea.com>
  */
 public class FXMLHomeController implements Initializable {
+
+    
+    @FXML
+    private Label titleLabel;
+    private Locale locale;
+    private ResourceBundle bundle;
+    
+    
+    
+    
+    @FXML
+    private void langFrChoosed(MouseEvent event) {
+        //loadLang("fr");
+        titleLabel.setText("Titre :");
+    }
 
     /**
      * Initializes the controller class.
@@ -41,5 +63,14 @@ public class FXMLHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    
+    private void loadLang(String lang){
+        // TODO : Complete internationnalization
+        locale = new Locale(lang);
+        bundle = ResourceBundle.getBundle("bundles.lang", locale);
+        titleLabel.setText(bundle.getString("selectedDirectoryText"));
+        
+    }
     
 }
