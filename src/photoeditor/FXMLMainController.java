@@ -7,12 +7,12 @@ package photoeditor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-
+import javafx.stage.DirectoryChooser;
+import java.io.File;
 /**
  *
  * @author Mohamed AIT MANSOUR <contact@numidea.com>
@@ -20,12 +20,20 @@ import javafx.scene.input.MouseEvent;
 public class FXMLMainController implements Initializable {
     
     @FXML
-    private Label label;
+    private Label selectedDirectoryText;
     
     @FXML
-    private void selectDirectoryHandler(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    private void selectDirectoryHandler(MouseEvent event) {
+        // TODO : Path not showing correctely
+         DirectoryChooser directoryChooser = new DirectoryChooser();
+                File selectedDirectory =  directoryChooser.showDialog(null);
+                
+                if(selectedDirectory == null){
+                    selectedDirectoryText.setText("No Directory selected");
+                }else{
+                    String path=selectedDirectory.getAbsolutePath();
+                    selectedDirectoryText.setText(path);
+                }
     }
     
     @FXML
