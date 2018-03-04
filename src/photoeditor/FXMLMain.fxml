@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="359.0" prefWidth="579.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLMainController">
     <children>
@@ -22,5 +23,10 @@
       </ImageView>
       <Button id="selectDirectoryButton" layoutX="410.0" layoutY="210.0" mnemonicParsing="false" onMouseClicked="#selectDirectoryHandler" prefHeight="47.0" prefWidth="94.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Directory" textFill="#250101" />
       <TextField id="selectedDirectoryText" layoutX="113.0" layoutY="210.0" prefHeight="47.0" prefWidth="280.0" promptText="Select a directory" text="Select a directory" />
+      <Label layoutX="544.0" layoutY="7.0" text="X" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
