@@ -25,42 +25,18 @@ package photoeditor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.DirectoryChooser;
-import java.io.File;
+
 /**
+ * FXML Controller class
  *
  * @author Mohamed AIT MANSOUR <contact@numidea.com>
  */
-public class FXMLMainController implements Initializable {
-    
-    @FXML
-    private Label selectedDirectoryText;
-    
-    @FXML
-    private void selectDirectoryHandler(MouseEvent event) {
-        // TODO : Path not showing correctely
-         DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedDirectory =  directoryChooser.showDialog(null);
-                
-                if(selectedDirectory == null){
-                   // selectedDirectoryText.setText("No Directory selected");
-                    System.out.println("No Directory selected");
-                }else{
-                    String path=selectedDirectory.getAbsolutePath();
-                   // selectedDirectoryText.setText(path);
-                    System.out.println(path);
-                }
-    }
-    
-    @FXML
-    private void closeHandler(MouseEvent event) {
-        System.exit(0);
-    }
-    
+public class FXMLHomeController implements Initializable {
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
