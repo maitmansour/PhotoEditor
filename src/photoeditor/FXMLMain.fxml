@@ -22,8 +22,8 @@
          </image>
       </ImageView>
       <Button id="selectDirectoryButton" layoutX="410.0" layoutY="210.0" mnemonicParsing="false" onMouseClicked="#selectDirectoryHandler" prefHeight="47.0" prefWidth="94.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Directory" textFill="#250101" />
-      <TextField id="selectedDirectoryText" layoutX="113.0" layoutY="210.0" prefHeight="47.0" prefWidth="280.0" promptText="Select a directory" text="Select a directory" />
-      <Label layoutX="544.0" layoutY="7.0" text="X" textFill="WHITE">
+      <TextField id="selectedDirectoryText" layoutX="113.0" layoutY="210.0" prefHeight="47.0" prefWidth="280.0" promptText="Select a directory" />
+      <Label id="close_button" layoutX="544.0" layoutY="7.0" onMouseClicked="#closeHandler" text="X" textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font>
