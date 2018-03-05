@@ -22,9 +22,11 @@ import javafx.stage.StageStyle;
 public class PhotoEditor extends Application {
     
     private static String selectedPath;
+    private static FindCertainExtension extentionAndFileFounder = new FindCertainExtension();
     
     @Override
     public void start(Stage stage) throws Exception {
+        setSelectedPath("");
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
         ResourceBundle bundle = new PropertyResourceBundle(inputStream);
@@ -51,6 +53,18 @@ public class PhotoEditor extends Application {
     public static String getSelectedPath() {
         return PhotoEditor.selectedPath;
     }
+    
+    /**
+     * ExtentionAndFileFounder Getter / Singleton
+     * @return FindCertainExtension Instance
+     */
+    public static FindCertainExtension getExtentionAndFileFounder() {
+        if (PhotoEditor.extentionAndFileFounder==null) {
+         PhotoEditor.extentionAndFileFounder = new FindCertainExtension();
+        }
+        return PhotoEditor.extentionAndFileFounder;
+    }
+   
 
     /**
      * SelectedPath Setter
@@ -58,6 +72,14 @@ public class PhotoEditor extends Application {
      */
     public static void setSelectedPath(String selectedPath) {
         PhotoEditor.selectedPath = selectedPath;
+    }
+    
+    /**
+     * Prepare image Path 
+     * @param selectedPath 
+     */
+    public static String prepareImagePath(String imageName) {
+        return "file:///"+PhotoEditor.getSelectedPath()+"\\"+imageName;
     }
     
 }

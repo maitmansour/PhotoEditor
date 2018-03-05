@@ -33,10 +33,14 @@ import java.io.FilenameFilter;
 public class FindCertainExtension {
 
     public boolean checkFileExistence(String folder, String ext) {
+        return getFilesList(folder, ext).length != 0;
+    }
+    
+    public String[] getFilesList(String folder, String ext) {
         GenericExtFilter filter = new GenericExtFilter(ext);
         File dir = new File(folder);
         String[] list = dir.list(filter);
-        return list.length != 0;
+        return list;
     }
 
     // inner class, generic extension filter
