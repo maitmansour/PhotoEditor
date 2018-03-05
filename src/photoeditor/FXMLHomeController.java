@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -36,6 +38,10 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 /**
  * FXML Controller class
@@ -51,6 +57,9 @@ public class FXMLHomeController implements Initializable {
     private ResourceBundle bundle;
     
     
+    @FXML
+    private ListView<String> picturesList;
+
     
     
     @FXML
@@ -82,6 +91,40 @@ public class FXMLHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
+     Image IMAGE_APPLE  = new Image("http://findicons.com/files/icons/832/social_and_web/64/apple.png");
+     Image IMAGE_VISTA  = new Image("http://antaki.ca/bloom/img/windows_64x64.png");
+     Image IMAGE_TWITTER = new Image("http://files.softicons.com/download/social-media-icons/fresh-social-media-icons-by-creative-nerds/png/64x64/twitter-bird.png");
+
+     Image[] listOfImages = {IMAGE_RUBY, IMAGE_APPLE, IMAGE_VISTA, IMAGE_TWITTER};
+
+        ObservableList<String> items =FXCollections.observableArrayList (
+                "RUBY", "APPLE", "VISTA", "TWITTER");
+        picturesList.setItems(items);
+
+        picturesList.setCellFactory(param -> new ListCell<String>() {
+            private ImageView imageView = new ImageView();
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    if(name.equals("RUBY"))
+                        imageView.setImage(listOfImages[0]);
+                    else if(name.equals("APPLE"))
+                        imageView.setImage(listOfImages[1]);
+                    else if(name.equals("VISTA"))
+                        imageView.setImage(listOfImages[2]);
+                    else if(name.equals("TWITTER"))
+                        imageView.setImage(listOfImages[3]);
+                    setText(name);
+                    setGraphic(imageView);
+                }
+            }
+        });
+    
     }    
     
     
