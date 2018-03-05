@@ -23,9 +23,12 @@
  */
 package photoeditor;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +46,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+ import javafx.scene.image.ImageView;
+
 /**
  * FXML Controller class
  *
@@ -50,23 +55,22 @@ import javafx.stage.Stage;
  */
 public class FXMLHomeController implements Initializable {
 
-    
     @FXML
     private Label titleLabel;
     private Locale locale;
     private ResourceBundle bundle;
-    
-    
-    @FXML
-    private ListView<String> picturesList;
 
-    
-    
+
+    @FXML
+    private ListView < String > picturesList;
+
+
+
     @FXML
     private void langFrChoosed(ActionEvent event) {
         loadLang("fr");
     }
-    
+
     @FXML
     private void langEnChoosed(ActionEvent event) {
         loadLang("en");
@@ -77,13 +81,13 @@ public class FXMLHomeController implements Initializable {
     }
 
     @FXML
-    private void updateHandler(ActionEvent event)  throws IOException  {
-                //System.out.println(PhotoEditor.getSelectedPath());
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"));
-                Parent rootWindow = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(rootWindow));  
-                stage.show();
+    private void updateHandler(ActionEvent event) throws IOException {
+        //System.out.println(PhotoEditor.getSelectedPath());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"));
+        Parent rootWindow = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(rootWindow));
+        stage.show();
     }
     /**
      * Initializes the controller class.
@@ -91,49 +95,47 @@ public class FXMLHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
-     Image IMAGE_APPLE  = new Image("http://findicons.com/files/icons/832/social_and_web/64/apple.png");
-     Image IMAGE_VISTA  = new Image("http://antaki.ca/bloom/img/windows_64x64.png");
-     Image IMAGE_TWITTER = new Image("http://files.softicons.com/download/social-media-icons/fresh-social-media-icons-by-creative-nerds/png/64x64/twitter-bird.png");
+       String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
+       for (int i = 0; i < listOfImagesPaths.length; i++) {
+            System.out.println(listOfImagesPaths[i]);
+        }
+        Map<String, ImageView> MapOfImages = new HashMap<String, ImageView>();
 
-     Image[] listOfImages = {IMAGE_RUBY, IMAGE_APPLE, IMAGE_VISTA, IMAGE_TWITTER};
+             ImageView[] listOfImages = new ImageView[listOfImagesPaths.length];
 
+           for (int i = 0; i < listOfImagesPaths.length; i++) {
+               ImageView tmpImageView= new ImageView(PhotoEditor.prepareImagePath(listOfImagesPaths[i]));
+               tmpImageView.setFitHeight(150);
+               tmpImageView.setFitWidth(150);
+               
+               MapOfImages.put(listOfImagesPaths[i], tmpImageView);
+           }
+
+            
         ObservableList<String> items =FXCollections.observableArrayList (
-                "RUBY", "APPLE", "VISTA", "TWITTER");
+                listOfImagesPaths);
         picturesList.setItems(items);
+           picturesList.setCellFactory(param -> new ListCell<String>() {
+               @Override
+               public void updateItem(String name, boolean empty) {
+                   super.updateItem(name, empty);
+                   if (empty) {
+                       setGraphic(null);
+                   } else {
+                       //setText(name);
+                       setGraphic(MapOfImages.get(name));
+                   }
+               }
+           });
+    }
 
-        picturesList.setCellFactory(param -> new ListCell<String>() {
-            private ImageView imageView = new ImageView();
-            @Override
-            public void updateItem(String name, boolean empty) {
-                super.updateItem(name, empty);
-                if (empty) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    if(name.equals("RUBY"))
-                        imageView.setImage(listOfImages[0]);
-                    else if(name.equals("APPLE"))
-                        imageView.setImage(listOfImages[1]);
-                    else if(name.equals("VISTA"))
-                        imageView.setImage(listOfImages[2]);
-                    else if(name.equals("TWITTER"))
-                        imageView.setImage(listOfImages[3]);
-                    setText(name);
-                    setGraphic(imageView);
-                }
-            }
-        });
-    
-    }    
-    
-    
-    private void loadLang(String lang){
+
+    private void loadLang(String lang) {
         // TODO : Complete internationnalization
         locale = new Locale(lang);
         bundle = ResourceBundle.getBundle("bundles.lang", locale);
         titleLabel.setText(bundle.getString("titleLabel"));
-        
+
     }
-    
+
 }

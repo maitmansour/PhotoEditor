@@ -57,32 +57,29 @@ public class FXMLMainController implements Initializable {
         // TODO : Path not showing correctely
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(null);
-
-       ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-       InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
-       ResourceBundle bundle = new PropertyResourceBundle(inputStream);
-       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"),bundle);
-       Parent rootWindow = (Parent) fxmlLoader.load();
         if (selectedDirectory == null) {
             selectedDirectoryText.setText("No Directory selected");
             System.out.println("No Directory selected");
         } else {
-            FindCertainExtension isExtensionFounded = new FindCertainExtension();
             String path = selectedDirectory.getAbsolutePath();
             PhotoEditor.setSelectedPath(path);
-            if (isExtensionFounded.checkFileExistence(path, FILE_TEXT_EXT)) {
-
+            System.out.println(PhotoEditor.getSelectedPath());
+            if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, FILE_TEXT_EXT)) {
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
+                ResourceBundle bundle = new PropertyResourceBundle(inputStream);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"), bundle);
+                Parent rootWindow = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
-                stage.setScene(new Scene(rootWindow)); 
+                stage.setScene(new Scene(rootWindow));
                 Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
                 stage.show();
-                
-            }else{
-             selectedDirectoryText.setText("No Image founded");
+            } else {
+                selectedDirectoryText.setText("No Image founded");
 
             }
-           
+
         }
     }
 
