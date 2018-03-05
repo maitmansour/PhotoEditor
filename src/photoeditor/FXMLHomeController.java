@@ -69,6 +69,7 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void updateHandler(ActionEvent event)  throws IOException  {
+                //System.out.println(PhotoEditor.getSelectedPath());
                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"));
                 Parent rootWindow = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();

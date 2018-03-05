@@ -69,6 +69,7 @@ public class FXMLMainController implements Initializable {
         } else {
             FindCertainExtension isExtensionFounded = new FindCertainExtension();
             String path = selectedDirectory.getAbsolutePath();
+            PhotoEditor.setSelectedPath(path);
             if (isExtensionFounded.checkFileExistence(path, FILE_TEXT_EXT)) {
 
                 Stage stage = new Stage();

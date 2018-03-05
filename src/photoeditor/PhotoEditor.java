@@ -21,6 +21,8 @@ import javafx.stage.StageStyle;
  */
 public class PhotoEditor extends Application {
     
+    private static String selectedPath;
+    
     @Override
     public void start(Stage stage) throws Exception {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -40,6 +42,22 @@ public class PhotoEditor extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    /**
+     * SelectedPath Getter
+     * @return String Selected Path
+     */
+    public static String getSelectedPath() {
+        return PhotoEditor.selectedPath;
+    }
+
+    /**
+     * SelectedPath Setter
+     * @param selectedPath 
+     */
+    public static void setSelectedPath(String selectedPath) {
+        PhotoEditor.selectedPath = selectedPath;
     }
     
 }
