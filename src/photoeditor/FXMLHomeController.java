@@ -54,9 +54,17 @@ public class FXMLHomeController implements Initializable {
     
     
     @FXML
-    private void langFrChoosed(MouseEvent event) {
-        //loadLang("fr");
-        titleLabel.setText("Titre :");
+    private void langFrChoosed(ActionEvent event) {
+        loadLang("fr");
+    }
+    
+    @FXML
+    private void langEnChoosed(ActionEvent event) {
+        loadLang("en");
+    }
+    @FXML
+    private void langArChoosed(ActionEvent event) {
+        loadLang("ar");
     }
 
     @FXML
@@ -80,7 +88,7 @@ public class FXMLHomeController implements Initializable {
         // TODO : Complete internationnalization
         locale = new Locale(lang);
         bundle = ResourceBundle.getBundle("bundles.lang", locale);
-        titleLabel.setText(bundle.getString("selectedDirectoryText"));
+        titleLabel.setText(bundle.getString("titleLabel"));
         
     }
     

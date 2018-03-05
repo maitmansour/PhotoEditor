@@ -5,6 +5,9 @@
  */
 package photoeditor;
 
+import java.io.InputStream;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +23,11 @@ public class PhotoEditor extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLMain.fxml"));
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
+        ResourceBundle bundle = new PropertyResourceBundle(inputStream);
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLMain.fxml"),bundle);
+
         stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
         

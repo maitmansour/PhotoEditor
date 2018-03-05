@@ -31,6 +31,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.PropertyResourceBundle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXML;
@@ -56,7 +58,10 @@ public class FXMLMainController implements Initializable {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(null);
 
-       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"));
+       ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+       InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
+       ResourceBundle bundle = new PropertyResourceBundle(inputStream);
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"),bundle);
        Parent rootWindow = (Parent) fxmlLoader.load();
         if (selectedDirectory == null) {
             selectedDirectoryText.setText("No Directory selected");

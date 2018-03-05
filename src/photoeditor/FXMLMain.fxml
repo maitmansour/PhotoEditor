@@ -26,7 +26,7 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <Label fx:id="selectedDirectoryText" layoutX="73.0" layoutY="216.0" text="Please Select A directory By clicking on this folder" textFill="WHITE">
+      <Label fx:id="selectedDirectoryText" layoutX="73.0" layoutY="216.0" text="%selectedDirectoryText" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
