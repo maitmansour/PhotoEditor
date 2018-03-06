@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="523.0" prefWidth="870.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLHomeController">
+<AnchorPane fx:id="firstPane" prefHeight="523.0" prefWidth="870.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLHomeController">
    <children>
       <Pane layoutX="734.0" layoutY="32.0" prefHeight="300.0" prefWidth="128.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);">
          <children>

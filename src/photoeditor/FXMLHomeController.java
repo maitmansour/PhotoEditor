@@ -38,11 +38,13 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -61,6 +63,8 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private ListView < String > picturesList;
 
+    @FXML
+    private AnchorPane firstPane;
 
     @FXML
     private ImageView bigPicture;
@@ -79,16 +83,21 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void langFrChoosed(ActionEvent event) {
+      firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         loadLang("fr");
     }
 
     @FXML
     private void langEnChoosed(ActionEvent event) {
+      firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         loadLang("en");
     }
+    
     @FXML
     private void langArChoosed(ActionEvent event) {
+      firstPane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         loadLang("ar");
+
     }
 
     /**
