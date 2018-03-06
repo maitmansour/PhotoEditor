@@ -23,7 +23,6 @@
  */
 package photoeditor;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -39,14 +38,11 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
- import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -59,12 +55,27 @@ public class FXMLHomeController implements Initializable {
     private Label titleLabel;
     private Locale locale;
     private ResourceBundle bundle;
+    private Map < String, ImageView > MapOfImages;
 
 
     @FXML
     private ListView < String > picturesList;
 
 
+    @FXML
+    private ImageView bigPicture;
+
+    /**
+     * Fill the Big Picture Frame with clicked picture
+     * @param event 
+     */
+    @FXML
+    private void clickOnItemHandler(MouseEvent event) {
+        bigPicture.setImage(MapOfImages.get(picturesList.getSelectionModel().getSelectedItem()).getImage());
+        bigPicture.setFitHeight(300);
+        bigPicture.setFitWidth(300);
+        bigPicture.setPreserveRatio(false);
+    }
 
     @FXML
     private void langFrChoosed(ActionEvent event) {
@@ -80,6 +91,11 @@ public class FXMLHomeController implements Initializable {
         loadLang("ar");
     }
 
+    /**
+     * When Update Button clicked
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void updateHandler(ActionEvent event) throws IOException {
         //System.out.println(PhotoEditor.getSelectedPath());
@@ -94,47 +110,55 @@ public class FXMLHomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-       String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
-       for (int i = 0; i < listOfImagesPaths.length; i++) {
-            System.out.println(listOfImagesPaths[i]);
-        }
-        Map<String, ImageView> MapOfImages = new HashMap<String, ImageView>();
-
-             ImageView[] listOfImages = new ImageView[listOfImagesPaths.length];
-
-           for (int i = 0; i < listOfImagesPaths.length; i++) {
-               ImageView tmpImageView= new ImageView(PhotoEditor.prepareImagePath(listOfImagesPaths[i]));
-               tmpImageView.setFitHeight(150);
-               tmpImageView.setFitWidth(150);
-               
-               MapOfImages.put(listOfImagesPaths[i], tmpImageView);
-           }
-
-            
-        ObservableList<String> items =FXCollections.observableArrayList (
-                listOfImagesPaths);
-        picturesList.setItems(items);
-           picturesList.setCellFactory(param -> new ListCell<String>() {
-               @Override
-               public void updateItem(String name, boolean empty) {
-                   super.updateItem(name, empty);
-                   if (empty) {
-                       setGraphic(null);
-                   } else {
-                       //setText(name);
-                       setGraphic(MapOfImages.get(name));
-                   }
-               }
-           });
+        MapOfImages = new HashMap <  > ();
+        initListView();
     }
 
-
+    /**
+     * Load Lang and changes values of current textes to other language
+     * @param lang 
+     */
     private void loadLang(String lang) {
         // TODO : Complete internationnalization
         locale = new Locale(lang);
         bundle = ResourceBundle.getBundle("bundles.lang", locale);
         titleLabel.setText(bundle.getString("titleLabel"));
+
+    }
+
+    /**
+     * fill Listview
+     */
+    private void initListView() {
+        String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
+
+        ImageView[] listOfImages = new ImageView[listOfImagesPaths.length];
+
+        for (int i = 0; i < listOfImagesPaths.length; i++) {
+            ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPaths[i]));
+            tmpImageView.setFitHeight(150);
+            tmpImageView.setFitWidth(150);
+
+            MapOfImages.put(listOfImagesPaths[i], tmpImageView);
+        }
+
+
+        ObservableList < String > items = FXCollections.observableArrayList(
+            listOfImagesPaths);
+        picturesList.setItems(items);
+        picturesList.setCellFactory(param -> new ListCell < String > () {
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    //setText(name);
+                    setGraphic(MapOfImages.get(name));
+                }
+            }
+        });
+
 
     }
 

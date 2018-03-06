@@ -36,7 +36,7 @@
       </Pane>
       <Pane layoutX="411.0" layoutY="33.0" prefHeight="298.0" prefWidth="301.0">
          <children>
-            <ImageView fitHeight="300.0" fitWidth="341.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="bigPicture" fitHeight="300.0" fitWidth="300.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/undifined.jpg" />
                </image>
@@ -78,7 +78,7 @@
             <Button layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" />
          </children>
       </Pane>
-      <ListView fx:id="picturesList" layoutX="14.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="HORIZONTAL" prefHeight="180.0" prefWidth="851.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);" styleClass=".list-view .scroll-bar:horizontal .increment-arrow,.list-view .scroll-bar:horizontal .decrement-arrow,.list-view .scroll-bar:horizontal .increment-button,.list-view .scroll-bar:horizontal .decrement-button {    -fx-padding:0;}" />
+      <ListView fx:id="picturesList" layoutX="14.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#clickOnItemHandler" orientation="HORIZONTAL" prefHeight="180.0" prefWidth="851.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);" styleClass=".list-view .scroll-bar:horizontal .increment-arrow,.list-view .scroll-bar:horizontal .decrement-arrow,.list-view .scroll-bar:horizontal .increment-button,.list-view .scroll-bar:horizontal .decrement-button {    -fx-padding:0;}" />
       <ImageView fitHeight="49.0" fitWidth="182.0" layoutX="683.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/search.png" />
