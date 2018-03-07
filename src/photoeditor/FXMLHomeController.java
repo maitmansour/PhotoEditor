@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -63,8 +65,17 @@ public class FXMLHomeController implements Initializable {
     private Map < String, ImageView > MapOfImages;
 
 
+     
+    
+    
     @FXML
     private ListView < String > picturesList;
+    
+    @FXML
+    private Label  pictureTitleName;
+    
+    @FXML
+    private Label  pictureTagsValue;
 
     @FXML
     private AnchorPane firstPane;
@@ -77,11 +88,26 @@ public class FXMLHomeController implements Initializable {
      * @param event 
      */
     @FXML
-    private void clickOnItemHandler(MouseEvent event) {
-        bigPicture.setImage(MapOfImages.get(picturesList.getSelectionModel().getSelectedItem()).getImage());
+    private void clickOnItemHandler(MouseEvent event) throws Exception {
+        String currentPicture=picturesList.getSelectionModel().getSelectedItem();
+        bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
         bigPicture.setFitHeight(300);
         bigPicture.setFitWidth(300);
         bigPicture.setPreserveRatio(false);
+        ArrayList<String> currentPictureKeywords = PhotoEditor.getMapOfKeywords().get(currentPicture);
+        pictureTitleName.setText(currentPicture);
+        StringBuilder sb = new StringBuilder();
+        for (String s : currentPictureKeywords)
+        {
+            sb.append(s);
+            sb.append(",\t");
+        }
+        FXMLUpdatePictureController.tmpTitle=currentPicture;
+        FXMLUpdatePictureController.tmpTags=sb.toString();
+        //To add new Keyword : 
+        //PhotoEditor.getMapOfKeywords().get(currentPicture).add("ok");
+       // pictureTagsValue.setText(sb.toString());
+        
     }
 
     @FXML
@@ -122,8 +148,12 @@ public class FXMLHomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        MapOfImages = new HashMap <  > ();
-        initListView();
+        try {
+            MapOfImages = new HashMap <  > ();
+            initListView();
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -141,7 +171,7 @@ public class FXMLHomeController implements Initializable {
     /**
      * fill Listview
      */
-    private void initListView() {
+    private void initListView() throws Exception {
         String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
 
         ImageView[] listOfImages = new ImageView[listOfImagesPaths.length];
@@ -150,7 +180,7 @@ public class FXMLHomeController implements Initializable {
             ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPaths[i]));
             tmpImageView.setFitHeight(150);
             tmpImageView.setFitWidth(150);
-
+            PhotoEditor.getMapOfKeywords().putIfAbsent(listOfImagesPaths[i], new ArrayList());
             MapOfImages.put(listOfImagesPaths[i], tmpImageView);
         }
 

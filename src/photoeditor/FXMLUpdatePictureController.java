@@ -29,6 +29,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 /**
  * FXML Controller class
@@ -37,15 +39,23 @@ import javafx.stage.Stage;
  */
 public class FXMLUpdatePictureController implements Initializable {
 
+        public static String tmpTitle;
+        public static String tmpTags;
+
  @FXML 
  private javafx.scene.control.Button saveButton;
+ 
+ @FXML 
+ private TextArea tagsTextArea;
+ 
+ @FXML 
+ private TextField titleTextField;
        
         
     @FXML
     private void saveHandler(ActionEvent event) throws IOException {
     Stage stage = (Stage) saveButton.getScene().getWindow();
     stage.close();
-        
     }
     /**
      * Initializes the controller class.
@@ -54,6 +64,8 @@ public class FXMLUpdatePictureController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        titleTextField.setText(tmpTitle);
+        tagsTextArea.setText(tmpTags);
         // TODO
     }    
     

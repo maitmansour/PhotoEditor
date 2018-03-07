@@ -55,12 +55,12 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <Label layoutX="118.0" layoutY="37.0" prefHeight="34.0" prefWidth="209.0" text="my-picture.jpg" textFill="WHITE">
+            <Label fx:id="pictureTitleName" layoutX="118.0" layoutY="37.0" prefHeight="34.0" prefWidth="209.0" text="my-picture.jpg" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="118.0" layoutY="108.0" prefHeight="34.0" prefWidth="209.0" text="tag1, tag2, tag3, tag4..." textFill="WHITE">
+            <Label fx:id="pictureTagsValue" layoutX="118.0" layoutY="108.0" prefHeight="34.0" prefWidth="209.0" text="tag1, tag2, tag3, tag4..." textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
