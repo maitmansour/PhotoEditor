@@ -45,22 +45,22 @@
       </Pane>
       <Pane layoutX="16.0" layoutY="32.0" prefHeight="300.0" prefWidth="361.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);">
          <children>
-            <Label fx:id="titleLabel" layoutX="14.0" layoutY="30.0" prefHeight="49.0" prefWidth="100.0" text="%titleLabel" textFill="WHITE">
+            <Label fx:id="titleLabel" layoutX="14.0" layoutY="9.0" prefHeight="49.0" prefWidth="100.0" text="%titleLabel" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="99.0" prefHeight="49.0" prefWidth="100.0" text="Tags :" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="78.0" prefHeight="49.0" prefWidth="100.0" text="Tags :" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="35.0" />
                </font>
             </Label>
-            <Label fx:id="pictureTitleName" layoutX="118.0" layoutY="37.0" prefHeight="34.0" prefWidth="209.0" text="my-picture.jpg" textFill="WHITE">
+            <Label fx:id="pictureTitleName" alignment="TOP_LEFT" layoutX="122.0" layoutY="23.0" prefHeight="71.0" prefWidth="209.0" text="Please select a picture " textFill="WHITE" wrapText="true">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label fx:id="pictureTagsValue" layoutX="118.0" layoutY="108.0" prefHeight="34.0" prefWidth="209.0" text="tag1, tag2, tag3, tag4..." textFill="WHITE">
+            <Label fx:id="pictureTagsValue" alignment="TOP_LEFT" layoutX="118.0" layoutY="94.0" prefHeight="84.0" prefWidth="233.0" text="No Picture was selected " textFill="WHITE" wrapText="true">
                <font>
                   <Font size="17.0" />
                </font>

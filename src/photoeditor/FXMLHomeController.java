@@ -105,7 +105,6 @@ public class FXMLHomeController implements Initializable {
         }
         FXMLUpdatePictureController.tmpTitle=currentPicture;
         FXMLUpdatePictureController.tmpTags=sb.toString();
-        //To add new Keyword : 
         pictureTagsValue.setText(sb.toString());
         
     }
