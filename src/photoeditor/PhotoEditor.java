@@ -158,19 +158,16 @@ public class PhotoEditor extends Application {
     public static void alertBuilder(int message, AlertType type){
         alert.setAlertType(type);
         alert.setTitle("PhotoEditor");
+        alert.setHeaderText(null);
 
         if (message==1) {
-            alert.setHeaderText("No Directory selected");
             alert.setContentText("Please Select a directory !");
         }else if(message==2){
-            alert.setHeaderText("No Picture on this Directory");
             alert.setContentText("Please Select a directory that contains images !");
         }else if(message==3){
-            alert.setHeaderText("No Picture with this tag");
             alert.setContentText("Please a valid tag ! ");
         }else if(message==4){
-            alert.setHeaderText("Language changed successfully");
-            alert.setContentText("Thank you ! ");
+            alert.setContentText("Language changed successfully ");
         }
         alert.showAndWait();
     }

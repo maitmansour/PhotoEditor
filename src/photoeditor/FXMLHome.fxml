@@ -94,9 +94,9 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Language">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#langFrChoosed" text="Français" />
-                  <MenuItem mnemonicParsing="false" onAction="#langEnChoosed" text="English" />
-                  <MenuItem mnemonicParsing="false" onAction="#langArChoosed" text="العربية" />
+              <MenuItem fx:id="fr" mnemonicParsing="false" onAction="#langChoosed" text="Français" />
+                  <MenuItem fx:id="en" mnemonicParsing="false" onAction="#langChoosed" text="English" />
+                  <MenuItem fx:id="ar" mnemonicParsing="false" onAction="#langChoosed" text="العربية" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

@@ -48,6 +48,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
@@ -67,19 +68,22 @@ public class FXMLHomeController implements Initializable {
     private Map < String, ImageView > MapOfImages;
 
 
-     
-    
-    
+
+
+
     @FXML
     private ListView < String > picturesList;
-    
+
     @FXML
-    private Label  pictureTitleName;
+    private Label pictureTitleName;
+
     @FXML
-    private TextField  SearchTagValue;
-    
+    private MenuItem ar, fr, en;
     @FXML
-    private Label  pictureTagsValue;
+    private TextField SearchTagValue;
+
+    @FXML
+    private Label pictureTagsValue;
 
     @FXML
     private AnchorPane firstPane;
@@ -87,15 +91,15 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private ImageView bigPicture;
 
-    
+
 
     @FXML
     private void findByTagHandler(ActionEvent event) throws Exception {
         if (SearchTagValue.getText().equals("")) {
-            PhotoEditor.alertBuilder(3,Alert.AlertType.WARNING);
-        initListView(null);
-        }else{
-                    initListView(SearchTagValue.getText());
+            PhotoEditor.alertBuilder(3, Alert.AlertType.WARNING);
+            initListView(null);
+        } else {
+            initListView(SearchTagValue.getText());
         }
     }
     /**
@@ -104,13 +108,13 @@ public class FXMLHomeController implements Initializable {
      */
     @FXML
     private void clickOnItemHandler(MouseEvent event) throws Exception {
-        String currentPicture=picturesList.getSelectionModel().getSelectedItem();
-        FXMLUpdatePictureController.tmpPicture=currentPicture;
+        String currentPicture = picturesList.getSelectionModel().getSelectedItem();
+        FXMLUpdatePictureController.tmpPicture = currentPicture;
         bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
         bigPicture.setFitHeight(300);
         bigPicture.setFitWidth(300);
         bigPicture.setPreserveRatio(false);
-        ArrayList<String> currentPictureKeywords = PhotoEditor.getMapOfKeywords().get(currentPicture);
+        ArrayList < String > currentPictureKeywords = PhotoEditor.getMapOfKeywords().get(currentPicture);
         pictureTitleName.setText(currentPicture);
         StringBuilder sb = new StringBuilder();
         currentPictureKeywords.stream().map((s) -> {
@@ -119,33 +123,25 @@ public class FXMLHomeController implements Initializable {
         }).forEach((_item) -> {
             sb.append(",");
         });
-        FXMLUpdatePictureController.tmpTitle=currentPicture;
-        FXMLUpdatePictureController.tmpTags=sb.toString();
+        FXMLUpdatePictureController.tmpTitle = currentPicture;
+        FXMLUpdatePictureController.tmpTags = sb.toString();
         pictureTagsValue.setText(sb.toString());
-        
     }
 
+    /**
+     * Update View Language
+     * @param event 
+     */
     @FXML
-    private void langFrChoosed(ActionEvent event) {
-      firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-        PhotoEditor.alertBuilder(4,Alert.AlertType.INFORMATION);
-        loadLang("fr");
-    }
-
-    @FXML
-    private void langEnChoosed(ActionEvent event) {
-      firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-        PhotoEditor.alertBuilder(4,Alert.AlertType.INFORMATION);
-        loadLang("en");
-    }
-    
-    @FXML
-    private void langArChoosed(ActionEvent event) {
-                PhotoEditor.alertBuilder(4,Alert.AlertType.INFORMATION);
-
-      firstPane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        loadLang("ar");
-
+    private void langChoosed(ActionEvent event) {
+        String lang = event.getSource().toString().subSequence(12, 14).toString();
+        loadLang(lang);
+        if ("ar".equals(lang)) {
+            firstPane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        } else {
+            firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        }
+        PhotoEditor.alertBuilder(4, Alert.AlertType.INFORMATION);
     }
 
     /**
@@ -170,23 +166,11 @@ public class FXMLHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            MapOfImages = new HashMap <  > ();
+            MapOfImages = new HashMap < > ();
             initListView(null);
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    /**
-     * Load Lang and changes values of current textes to other language
-     * @param lang 
-     */
-    private void loadLang(String lang) {
-        // TODO : Complete internationnalization
-        locale = new Locale(lang);
-        bundle = ResourceBundle.getBundle("bundles.lang", locale);
-        titleLabel.setText(bundle.getString("titleLabel"));
-
     }
 
     /**
@@ -196,20 +180,19 @@ public class FXMLHomeController implements Initializable {
         picturesList.getItems().removeAll();
         String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
 
-        if (Keyword!=null) {    
-           Set<String> foundedList = new HashSet<>();
-            for (Map.Entry<String, ArrayList> onPicture : PhotoEditor.getMapOfKeywords().entrySet()) {
-                            for(int i=0;i<onPicture.getValue().size();i++){
-                    if(onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase()))
-                    {
+        if (Keyword != null) {
+            Set < String > foundedList = new HashSet < > ();
+            for (Map.Entry < String, ArrayList > onPicture: PhotoEditor.getMapOfKeywords().entrySet()) {
+                for (int i = 0; i < onPicture.getValue().size(); i++) {
+                    if (onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase())) {
                         foundedList.add(onPicture.getKey());
                     }
-                }   
+                }
             }
-            listOfImagesPaths=foundedList.toArray(new String[0]);
+            listOfImagesPaths = foundedList.toArray(new String[0]);
         }
-        
-        for (String listOfImagesPath : listOfImagesPaths) {
+
+        for (String listOfImagesPath: listOfImagesPaths) {
             ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPath));
             tmpImageView.setFitHeight(150);
             tmpImageView.setFitWidth(150);
@@ -234,6 +217,18 @@ public class FXMLHomeController implements Initializable {
             }
         });
 
+
+    }
+     
+    /**
+     * Load Lang and changes values of current textes to other language
+     * @param lang 
+     */
+    private void loadLang(String lang) {
+        // TODO : Complete internationnalization
+        locale = new Locale(lang);
+        bundle = ResourceBundle.getBundle("bundles.lang", locale);
+        titleLabel.setText(bundle.getString("titleLabel"));
 
     }
 
