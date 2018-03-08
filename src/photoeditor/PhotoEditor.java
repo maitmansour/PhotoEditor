@@ -54,7 +54,7 @@ public class PhotoEditor extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         setSelectedPath("");
-        //unFreezeMapOfKeywords();
+        unFreezeKeywordsMap();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
         ResourceBundle bundle = new PropertyResourceBundle(inputStream);
@@ -117,22 +117,29 @@ public class PhotoEditor extends Application {
      */
     public static Map < String, ArrayList > getMapOfKeywords() throws Exception {
         if (PhotoEditor.MapOfKeywords == null) {
-           // if (!unFreezeMapOfKeywords()) {
                 PhotoEditor.MapOfKeywords = new HashMap < > ();
-            //}
         }
         return PhotoEditor.MapOfKeywords;
     }
 
 
-    public static void freezeMapOfKeywords() throws Exception {
+    /**
+     * freeze keywords Map
+     * @throws Exception 
+     */
+    public static void freezeKeywordsMap() throws Exception {
         FileOutputStream keywordsFile = new FileOutputStream("src/data/keywords.dat");
         ObjectOutputStream writer = new ObjectOutputStream(keywordsFile);
         writer.writeObject(getMapOfKeywords());
         writer.close();
     }
 
-    public static boolean unFreezeMapOfKeywords() throws Exception {
+    /**
+     * unfreeze keywords and fill MapOfKeywords
+     * @return
+     * @throws Exception 
+     */
+    public static boolean unFreezeKeywordsMap() throws Exception {
         File f = new File("src/data/keywords.dat");
         if (f.exists() && !f.isDirectory()) {
             FileInputStream keywordsFile = new FileInputStream("src/data/keywords.dat");
@@ -145,10 +152,14 @@ public class PhotoEditor extends Application {
         return false;
     }
 
+    /**
+     * Stop stage and Freeze keywords
+     * @throws Exception 
+     */
     @Override
     public void stop() throws Exception {
         System.out.println("Stage is closing");
-       // freezeMapOfKeywords();
+        freezeKeywordsMap();
     }
 
 }
