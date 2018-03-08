@@ -90,6 +90,7 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void clickOnItemHandler(MouseEvent event) throws Exception {
         String currentPicture=picturesList.getSelectionModel().getSelectedItem();
+        FXMLUpdatePictureController.tmpPicture=currentPicture;
         bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
         bigPicture.setFitHeight(300);
         bigPicture.setFitWidth(300);
@@ -100,13 +101,12 @@ public class FXMLHomeController implements Initializable {
         for (String s : currentPictureKeywords)
         {
             sb.append(s);
-            sb.append(",\t");
+            sb.append(",");
         }
         FXMLUpdatePictureController.tmpTitle=currentPicture;
         FXMLUpdatePictureController.tmpTags=sb.toString();
         //To add new Keyword : 
-        //PhotoEditor.getMapOfKeywords().get(currentPicture).add("ok");
-       // pictureTagsValue.setText(sb.toString());
+        pictureTagsValue.setText(sb.toString());
         
     }
 

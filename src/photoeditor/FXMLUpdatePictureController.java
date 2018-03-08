@@ -25,7 +25,10 @@ package photoeditor;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,6 +44,7 @@ public class FXMLUpdatePictureController implements Initializable {
 
         public static String tmpTitle;
         public static String tmpTags;
+        public static String tmpPicture;
 
  @FXML 
  private javafx.scene.control.Button saveButton;
@@ -53,8 +57,16 @@ public class FXMLUpdatePictureController implements Initializable {
        
         
     @FXML
-    private void saveHandler(ActionEvent event) throws IOException {
+    private void saveHandler(ActionEvent event) throws IOException, Exception {
     Stage stage = (Stage) saveButton.getScene().getWindow();
+    String currentPictureTags = tagsTextArea.getText().toUpperCase();
+    String[] TagsParts = currentPictureTags.split(",");
+    Set<String> HashTagsParts = new HashSet<String>(Arrays.asList(TagsParts));
+    PhotoEditor.getMapOfKeywords().get(tmpPicture).clear();
+            for (String TagsPart : HashTagsParts) {
+                PhotoEditor.getMapOfKeywords().get(tmpPicture).add(TagsPart);
+            }
+
     stage.close();
     }
     /**
