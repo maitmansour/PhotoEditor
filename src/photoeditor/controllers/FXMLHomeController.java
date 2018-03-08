@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package photoeditor;
+package photoeditor.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,6 +53,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import photoeditor.PhotoEditor;
 
 /**
  * FXML Controller class
@@ -61,36 +62,23 @@ import javafx.scene.layout.AnchorPane;
  */
 public class FXMLHomeController implements Initializable {
 
+    /**
+     * FXML Declarations
+     */
     @FXML
     private Label titleLabel;
-    private Locale locale;
-    private ResourceBundle bundle;
-    private Map < String, ImageView > MapOfImages;
-
-
-
-
-
-    @FXML
     private ListView < String > picturesList;
-
-    @FXML
     private Label pictureTitleName;
-
-    @FXML
     private MenuItem ar, fr, en;
-    @FXML
     private TextField SearchTagValue;
-
-    @FXML
     private Label pictureTagsValue;
-
-    @FXML
     private AnchorPane firstPane;
-
-    @FXML
     private ImageView bigPicture;
 
+    /**
+     * Ordinary declarations
+     */
+    private Map < String, ImageView > MapOfImages;
 
 
     @FXML
@@ -226,10 +214,9 @@ public class FXMLHomeController implements Initializable {
      */
     private void loadLang(String lang) {
         // TODO : Complete internationnalization
-        locale = new Locale(lang);
-        bundle = ResourceBundle.getBundle("bundles.lang", locale);
+        Locale locale = new Locale(lang);
+        ResourceBundle bundle = ResourceBundle.getBundle("bundles.lang", locale);
         titleLabel.setText(bundle.getString("titleLabel"));
-
     }
 
 }

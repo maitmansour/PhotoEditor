@@ -52,7 +52,7 @@ public class PhotoEditor extends Application {
     private static String selectedPath;
     private static FindCertainExtension extentionAndFileFounder = new FindCertainExtension();
     private static Map < String, ArrayList > MapOfKeywords;
-    private static Alert alert =new Alert(Alert.AlertType.NONE);
+    private static final Alert alert =new Alert(Alert.AlertType.NONE);
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -107,7 +107,8 @@ public class PhotoEditor extends Application {
 
     /**
      * Prepare image Path 
-     * @param selectedPath 
+     * @param imageName 
+     * @return  
      */
     public static String prepareImagePath(String imageName) {
         return "file:///" + PhotoEditor.getSelectedPath() + "\\" + imageName;
@@ -117,6 +118,7 @@ public class PhotoEditor extends Application {
     /**
      * ExtentionAndFileFounder Getter / Singleton
      * @return FindCertainExtension Instance
+     * @throws java.lang.Exception
      */
     public static Map < String, ArrayList > getMapOfKeywords() throws Exception {
         if (PhotoEditor.MapOfKeywords == null) {
@@ -132,9 +134,9 @@ public class PhotoEditor extends Application {
      */
     public static void freezeKeywordsMap() throws Exception {
         FileOutputStream keywordsFile = new FileOutputStream("src/data/keywords.dat");
-        ObjectOutputStream writer = new ObjectOutputStream(keywordsFile);
-        writer.writeObject(getMapOfKeywords());
-        writer.close();
+        try (ObjectOutputStream writer = new ObjectOutputStream(keywordsFile)) {
+            writer.writeObject(getMapOfKeywords());
+        }
     }
 
     /**
@@ -146,9 +148,9 @@ public class PhotoEditor extends Application {
         File f = new File("src/data/keywords.dat");
         if (f.exists() && !f.isDirectory()) {
             FileInputStream keywordsFile = new FileInputStream("src/data/keywords.dat");
-            ObjectInputStream reader = new ObjectInputStream(keywordsFile);
-            MapOfKeywords = ( Map < String, ArrayList >) reader.readObject();
-            reader.close();
+            try (ObjectInputStream reader = new ObjectInputStream(keywordsFile)) {
+                MapOfKeywords = ( Map < String, ArrayList >) reader.readObject();
+            }
             return true;
         }
         f.createNewFile();
@@ -178,7 +180,6 @@ public class PhotoEditor extends Application {
      */
     @Override
     public void stop() throws Exception {
-        System.out.println("Stage is closing");
         freezeKeywordsMap();
     }
 

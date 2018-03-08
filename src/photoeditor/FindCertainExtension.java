@@ -35,7 +35,12 @@ public class FindCertainExtension {
     public boolean checkFileExistence(String folder, String ext) {
         return getFilesList(folder, ext).length != 0;
     }
-    
+    /**
+     * Get all files with extension in folder
+     * @param folder
+     * @param ext
+     * @return 
+     */
     public String[] getFilesList(String folder, String ext) {
         GenericExtFilter filter = new GenericExtFilter(ext);
         File dir = new File(folder);
@@ -43,7 +48,9 @@ public class FindCertainExtension {
         return list;
     }
 
-    // inner class, generic extension filter
+   /**
+    * Generic extension filter
+    */
     public class GenericExtFilter implements FilenameFilter {
 
         private final String extension;

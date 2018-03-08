@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package photoeditor;
+package photoeditor.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,13 +35,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import photoeditor.PhotoEditor;
 /**
  * FXML Controller class
  *
  * @author Mohamed AIT MANSOUR <contact@numidea.com>
  */
 public class FXMLUpdatePictureController implements Initializable {
-
         public static String tmpTitle;
         public static String tmpTags;
         public static String tmpPicture;
@@ -61,14 +61,14 @@ public class FXMLUpdatePictureController implements Initializable {
     Stage stage = (Stage) saveButton.getScene().getWindow();
     String currentPictureTags = tagsTextArea.getText().toUpperCase();
     String[] TagsParts = currentPictureTags.split(",");
-    Set<String> HashTagsParts = new HashSet<String>(Arrays.asList(TagsParts));
+    Set<String> HashTagsParts = new HashSet<>(Arrays.asList(TagsParts));
     PhotoEditor.getMapOfKeywords().get(tmpPicture).clear();
-            for (String TagsPart : HashTagsParts) {
-                PhotoEditor.getMapOfKeywords().get(tmpPicture).add(TagsPart);
-            }
-
-    stage.close();
+    for (String TagsPart : HashTagsParts) {
+       PhotoEditor.getMapOfKeywords().get(tmpPicture).add(TagsPart);
+   }
+        stage.close();
     }
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -78,7 +78,6 @@ public class FXMLUpdatePictureController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         titleTextField.setText(tmpTitle);
         tagsTextArea.setText(tmpTags);
-        // TODO
     }    
     
 }
