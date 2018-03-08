@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.PropertyResourceBundle;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXML;
@@ -85,7 +86,7 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private void closeHandler(MouseEvent event) {
-        System.exit(0);
+        Platform.exit();
     }
 
     @Override
