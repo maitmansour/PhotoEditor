@@ -38,6 +38,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -50,6 +52,7 @@ public class PhotoEditor extends Application {
     private static String selectedPath;
     private static FindCertainExtension extentionAndFileFounder = new FindCertainExtension();
     private static Map < String, ArrayList > MapOfKeywords;
+    private static Alert alert =new Alert(Alert.AlertType.NONE);
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -150,6 +153,26 @@ public class PhotoEditor extends Application {
         }
         f.createNewFile();
         return false;
+    }
+    
+    public static void alertBuilder(int message, AlertType type){
+        alert.setAlertType(type);
+        alert.setTitle("PhotoEditor");
+
+        if (message==1) {
+            alert.setHeaderText("No Directory selected");
+            alert.setContentText("Please Select a directory !");
+        }else if(message==2){
+            alert.setHeaderText("No Picture on this Directory");
+            alert.setContentText("Please Select a directory that contains images !");
+        }else if(message==3){
+            alert.setHeaderText("No Picture with this tag");
+            alert.setContentText("Please a valid tag ! ");
+        }else if(message==4){
+            alert.setHeaderText("Language changed successfully");
+            alert.setContentText("Thank you ! ");
+        }
+        alert.showAndWait();
     }
 
     /**

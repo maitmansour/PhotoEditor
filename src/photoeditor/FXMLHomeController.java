@@ -45,6 +45,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -91,6 +92,7 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void findByTagHandler(ActionEvent event) throws Exception {
         if (SearchTagValue.getText().equals("")) {
+            PhotoEditor.alertBuilder(3,Alert.AlertType.WARNING);
         initListView(null);
         }else{
                     initListView(SearchTagValue.getText());
@@ -126,17 +128,21 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void langFrChoosed(ActionEvent event) {
       firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        PhotoEditor.alertBuilder(4,Alert.AlertType.INFORMATION);
         loadLang("fr");
     }
 
     @FXML
     private void langEnChoosed(ActionEvent event) {
       firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        PhotoEditor.alertBuilder(4,Alert.AlertType.INFORMATION);
         loadLang("en");
     }
     
     @FXML
     private void langArChoosed(ActionEvent event) {
+                PhotoEditor.alertBuilder(4,Alert.AlertType.INFORMATION);
+
       firstPane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         loadLang("ar");
 

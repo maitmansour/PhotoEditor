@@ -38,6 +38,9 @@ import javafx.scene.Scene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
 /**
@@ -51,19 +54,19 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private Label selectedDirectoryText;
+    
+    @FXML
+    private ProgressBar MainProgressBar;
 
     @FXML
     private void selectDirectoryHandler(MouseEvent event) throws IOException {
-        // TODO : Path not showing correctely
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(null);
         if (selectedDirectory == null) {
-            selectedDirectoryText.setText("No Directory selected");
-            System.out.println("No Directory selected");
+            PhotoEditor.alertBuilder(1,Alert.AlertType.WARNING);
         } else {
             String path = selectedDirectory.getAbsolutePath();
             PhotoEditor.setSelectedPath(path);
-            System.out.println(PhotoEditor.getSelectedPath());
             if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, FILE_TEXT_EXT)) {
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
@@ -76,8 +79,7 @@ public class FXMLMainController implements Initializable {
                 app_stage.hide();
                 stage.show();
             } else {
-                selectedDirectoryText.setText("No Image founded");
-
+            PhotoEditor.alertBuilder(2,Alert.AlertType.WARNING);
             }
 
         }
@@ -90,7 +92,8 @@ public class FXMLMainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TODO : progress Bar 
+        MainProgressBar.setVisible(false);
     }
 
 }
