@@ -23,19 +23,20 @@
  */
 package photoeditor;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -89,6 +90,7 @@ public class FXMLHomeController implements Initializable {
      */
     @FXML
     private void clickOnItemHandler(MouseEvent event) throws Exception {
+       // initListView("CA");
         String currentPicture=picturesList.getSelectionModel().getSelectedItem();
         FXMLUpdatePictureController.tmpPicture=currentPicture;
         bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
@@ -98,11 +100,12 @@ public class FXMLHomeController implements Initializable {
         ArrayList<String> currentPictureKeywords = PhotoEditor.getMapOfKeywords().get(currentPicture);
         pictureTitleName.setText(currentPicture);
         StringBuilder sb = new StringBuilder();
-        for (String s : currentPictureKeywords)
-        {
+        currentPictureKeywords.stream().map((s) -> {
             sb.append(s);
+            return s;
+        }).forEach((_item) -> {
             sb.append(",");
-        }
+        });
         FXMLUpdatePictureController.tmpTitle=currentPicture;
         FXMLUpdatePictureController.tmpTags=sb.toString();
         pictureTagsValue.setText(sb.toString());
@@ -144,12 +147,14 @@ public class FXMLHomeController implements Initializable {
     }
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             MapOfImages = new HashMap <  > ();
-            initListView();
+            initListView("CA");
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,17 +175,29 @@ public class FXMLHomeController implements Initializable {
     /**
      * fill Listview
      */
-    private void initListView() throws Exception {
+    private void initListView(String Keyword) throws Exception {
+        picturesList.getItems().removeAll();
         String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
 
-        ImageView[] listOfImages = new ImageView[listOfImagesPaths.length];
-
-        for (int i = 0; i < listOfImagesPaths.length; i++) {
-            ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPaths[i]));
+        if (Keyword!=null) {    
+           Set<String> foundedList = new HashSet<>();
+            for (Map.Entry<String, ArrayList> onPicture : PhotoEditor.getMapOfKeywords().entrySet()) {
+                            for(int i=0;i<onPicture.getValue().size();i++){
+                    if(onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase()))
+                    {
+                        foundedList.add(onPicture.getKey());
+                    }
+                }   
+            }
+            listOfImagesPaths=foundedList.toArray(new String[0]);
+        }
+        
+        for (String listOfImagesPath : listOfImagesPaths) {
+            ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPath));
             tmpImageView.setFitHeight(150);
             tmpImageView.setFitWidth(150);
-            PhotoEditor.getMapOfKeywords().putIfAbsent(listOfImagesPaths[i], new ArrayList());
-            MapOfImages.put(listOfImagesPaths[i], tmpImageView);
+            PhotoEditor.getMapOfKeywords().putIfAbsent(listOfImagesPath, new ArrayList());
+            MapOfImages.put(listOfImagesPath, tmpImageView);
         }
 
 
