@@ -28,7 +28,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -48,6 +47,7 @@ import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -74,6 +74,8 @@ public class FXMLHomeController implements Initializable {
     
     @FXML
     private Label  pictureTitleName;
+    @FXML
+    private TextField  SearchTagValue;
     
     @FXML
     private Label  pictureTagsValue;
@@ -84,13 +86,22 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private ImageView bigPicture;
 
+    
+
+    @FXML
+    private void findByTagHandler(ActionEvent event) throws Exception {
+        if (SearchTagValue.getText().equals("")) {
+        initListView(null);
+        }else{
+                    initListView(SearchTagValue.getText());
+        }
+    }
     /**
      * Fill the Big Picture Frame with clicked picture
      * @param event 
      */
     @FXML
     private void clickOnItemHandler(MouseEvent event) throws Exception {
-       // initListView("CA");
         String currentPicture=picturesList.getSelectionModel().getSelectedItem();
         FXMLUpdatePictureController.tmpPicture=currentPicture;
         bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
@@ -154,7 +165,7 @@ public class FXMLHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             MapOfImages = new HashMap <  > ();
-            initListView("CA");
+            initListView(null);
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
