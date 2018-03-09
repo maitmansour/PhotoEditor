@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package photoeditor.controllers;
+package photoeditor;
 
 import java.io.IOException;
 import java.net.URL;

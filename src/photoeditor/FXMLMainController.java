@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package photoeditor.controllers;
+package photoeditor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -55,6 +55,7 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private Label selectedDirectoryText;
+    @FXML
     private ProgressBar MainProgressBar;
 
     @FXML

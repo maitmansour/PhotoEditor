@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package photoeditor.controllers;
+package photoeditor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,7 +53,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import photoeditor.PhotoEditor;
 
 /**
  * FXML Controller class
@@ -67,12 +66,19 @@ public class FXMLHomeController implements Initializable {
      */
     @FXML
     private Label titleLabel;
+    @FXML
     private ListView < String > picturesList;
+    @FXML
     private Label pictureTitleName;
+    @FXML
     private MenuItem ar, fr, en;
+    @FXML
     private TextField SearchTagValue;
+    @FXML
     private Label pictureTagsValue;
+    @FXML
     private AnchorPane firstPane;
+    @FXML
     private ImageView bigPicture;
 
     /**
@@ -84,7 +90,6 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void findByTagHandler(ActionEvent event) throws Exception {
         if (SearchTagValue.getText().equals("")) {
-            PhotoEditor.alertBuilder(3, Alert.AlertType.WARNING);
             initListView(null);
         } else {
             initListView(SearchTagValue.getText());
