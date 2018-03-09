@@ -23,7 +23,10 @@
  */
 package photoeditor;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,7 +137,7 @@ public class FXMLHomeController implements Initializable {
     }
     
     /**
-     * Fill the Big Picture Frame with clicked picture
+     * Fill the Big Picture Frame with selected picture
      * @param event 
      */
     @FXML
@@ -143,6 +146,21 @@ public class FXMLHomeController implements Initializable {
                    selectItem();
 
         }
+    }   
+    
+    @FXML
+    private void onlineHelp(ActionEvent event) throws IOException, URISyntaxException{
+        if (Desktop.isDesktopSupported()) {
+    Desktop.getDesktop().browse(new URI("https://github.com/maitmansour95/PhotoEditor"));
+}
+    }
+    /**
+     * Alert if functionnality is under dev.
+     * @param event 
+     */
+    @FXML
+    private void undefinedFunctionnality(MouseEvent event) throws Exception {
+        PhotoEditor.alertBuilder(5, Alert.AlertType.ERROR);
     }
 
     /**

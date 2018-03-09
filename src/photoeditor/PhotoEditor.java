@@ -170,6 +170,8 @@ public class PhotoEditor extends Application {
             alert.setContentText("Please a valid tag ! ");
         }else if(message==4){
             alert.setContentText("Language changed successfully ");
+        }else if(message==5){
+            alert.setContentText("Sorry, this Functionnality is under developpement !");
         }
         alert.showAndWait();
     }

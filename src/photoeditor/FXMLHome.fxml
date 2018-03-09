@@ -17,17 +17,17 @@
    <children>
       <Pane layoutX="734.0" layoutY="32.0" prefHeight="300.0" prefWidth="128.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);">
          <children>
-            <ImageView fitHeight="100.0" fitWidth="128.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="100.0" fitWidth="128.0" layoutX="14.0" onMouseClicked="#undefinedFunctionnality" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/crop.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="100.0" fitWidth="128.0" layoutX="14.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="100.0" fitWidth="128.0" layoutX="14.0" layoutY="100.0" onMouseClicked="#undefinedFunctionnality" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/rotate.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="100.0" fitWidth="114.0" layoutX="9.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="100.0" fitWidth="114.0" layoutX="9.0" layoutY="207.0" onMouseClicked="#undefinedFunctionnality" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/diaporama.png" />
                </image>
@@ -83,7 +83,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Open" />
+              <MenuItem mnemonicParsing="false" text="Change directory" />
                   <MenuItem mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
@@ -96,7 +96,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="Online Help" />
+              <MenuItem mnemonicParsing="false" onAction="#onlineHelp" text="Online Help" />
                   <MenuItem mnemonicParsing="false" text="About Us" />
             </items>
           </Menu>
