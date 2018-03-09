@@ -52,6 +52,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -100,13 +102,9 @@ public class FXMLHomeController implements Initializable {
     public void onEnter(ActionEvent ae) throws Exception{
        findByTagHandler(ae);
     }
-    /**
-     * Fill the Big Picture Frame with clicked picture
-     * @param event 
-     */
-    @FXML
-    private void clickOnItemHandler(MouseEvent event) throws Exception {
-        String currentPicture = picturesList.getSelectionModel().getSelectedItem();
+    
+    private void selectItem() throws Exception{
+                String currentPicture = picturesList.getSelectionModel().getSelectedItem();
         FXMLUpdatePictureController.tmpPicture = currentPicture;
         bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
         bigPicture.setFitHeight(300);
@@ -124,6 +122,27 @@ public class FXMLHomeController implements Initializable {
         FXMLUpdatePictureController.tmpTitle = currentPicture;
         FXMLUpdatePictureController.tmpTags = sb.toString();
         pictureTagsValue.setText(sb.toString());
+    }
+    
+    /**
+     * Fill the Big Picture Frame with clicked picture
+     * @param event 
+     */
+    @FXML
+    private void clickOnItemHandler(MouseEvent event) throws Exception {
+        selectItem();
+    }
+    
+    /**
+     * Fill the Big Picture Frame with clicked picture
+     * @param event 
+     */
+    @FXML
+    private void ArrowsOnItemHandler(KeyEvent event) throws Exception {
+        if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
+                   selectItem();
+
+        }
     }
 
     /**
