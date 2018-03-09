@@ -53,6 +53,7 @@ public class PhotoEditor extends Application {
     private static FindCertainExtension extentionAndFileFounder = new FindCertainExtension();
     private static Map < String, ArrayList > MapOfKeywords;
     private static final Alert alert =new Alert(Alert.AlertType.NONE);
+    public static final String FILE_TEXT_EXT = ".jpg";
 
     @Override
     public void start(Stage stage) throws Exception {

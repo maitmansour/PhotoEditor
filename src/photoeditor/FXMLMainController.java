@@ -50,7 +50,6 @@ import photoeditor.PhotoEditor;
  */
 public class FXMLMainController implements Initializable {
 
-    private static final String FILE_TEXT_EXT = ".jpg";
 
 
     @FXML
@@ -67,7 +66,7 @@ public class FXMLMainController implements Initializable {
         } else {
             String path = selectedDirectory.getAbsolutePath();
             PhotoEditor.setSelectedPath(path);
-            if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, FILE_TEXT_EXT)) {
+            if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, PhotoEditor.FILE_TEXT_EXT)) {
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
                 ResourceBundle bundle = new PropertyResourceBundle(inputStream);

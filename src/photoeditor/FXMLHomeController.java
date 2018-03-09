@@ -24,7 +24,9 @@
 package photoeditor;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -33,10 +35,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,6 +51,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
@@ -58,6 +63,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 
 /**
  * FXML Controller class
@@ -92,6 +98,26 @@ public class FXMLHomeController implements Initializable {
     private Map < String, ImageView > MapOfImages;
 
 
+    @FXML
+    private void chooseExit(ActionEvent event){
+        Platform.exit();
+    }
+    @FXML
+    private void chooseAnotherDirectory(ActionEvent event) throws Exception{
+      DirectoryChooser directoryChooser = new DirectoryChooser();
+      File selectedDirectory = directoryChooser.showDialog(null);
+        if (selectedDirectory == null) {
+            PhotoEditor.alertBuilder(1,Alert.AlertType.WARNING);
+        } else {
+            String path = selectedDirectory.getAbsolutePath();
+            PhotoEditor.setSelectedPath(path);
+            if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, PhotoEditor.FILE_TEXT_EXT)) {
+                initListView(null);
+            } else {
+            PhotoEditor.alertBuilder(2,Alert.AlertType.WARNING);
+            }
+    }
+    }
     @FXML
     private void findByTagHandler(ActionEvent event) throws Exception {
         if (SearchTagValue.getText().equals("")) {
