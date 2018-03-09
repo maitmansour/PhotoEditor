@@ -79,11 +79,6 @@
          </children>
       </Pane>
       <ListView fx:id="picturesList" layoutX="14.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#clickOnItemHandler" orientation="HORIZONTAL" prefHeight="180.0" prefWidth="851.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);" styleClass=".list-view .scroll-bar:horizontal .increment-arrow,.list-view .scroll-bar:horizontal .decrement-arrow,.list-view .scroll-bar:horizontal .increment-button,.list-view .scroll-bar:horizontal .decrement-button {    -fx-padding:0;}" />
-      <TextField fx:id="SearchTagValue" layoutX="668.0" layoutY="346.0" prefHeight="35.0" prefWidth="132.0" promptText="Tags...">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
       <MenuBar layoutX="47.0" layoutY="2.0" prefHeight="28.0" prefWidth="816.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -112,6 +107,15 @@
             <Image url="@../images/PE.png" />
          </image>
       </ImageView>
-      <Button layoutX="800.0" layoutY="345.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="60.0" text="Find" />
+      <Pane layoutX="650.0" layoutY="346.0" prefHeight="47.0" prefWidth="209.0" style="-fx-background-color: rgba(0, 0, 0, 0.25); -fx-background-radius: 10;">
+         <children>
+            <TextField fx:id="SearchTagValue" layoutX="6.0" layoutY="6.0" onAction="#onEnter" prefHeight="35.0" prefWidth="132.0" promptText="Tags...">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Button layoutX="138.0" layoutY="5.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="60.0" text="Find" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

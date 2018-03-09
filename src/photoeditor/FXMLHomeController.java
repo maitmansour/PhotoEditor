@@ -95,6 +95,11 @@ public class FXMLHomeController implements Initializable {
             initListView(SearchTagValue.getText());
         }
     }
+    
+    @FXML
+    public void onEnter(ActionEvent ae) throws Exception{
+       findByTagHandler(ae);
+    }
     /**
      * Fill the Big Picture Frame with clicked picture
      * @param event 
