@@ -84,7 +84,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#chooseAnotherDirectory" text="Change directory" />
-                  <MenuItem mnemonicParsing="false" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#chooseExit" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Language">
@@ -97,12 +97,12 @@
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#onlineHelp" text="Online Help" />
-                  <MenuItem mnemonicParsing="false" text="About Us" />
+                  <MenuItem mnemonicParsing="false" onAction="#aboutUs" text="About Us" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <ImageView fitHeight="80.0" fitWidth="53.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="peLogo" fitHeight="80.0" fitWidth="53.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/PE.png" />
          </image>
@@ -117,5 +117,10 @@
             <Button layoutX="138.0" layoutY="5.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="60.0" text="Find" />
          </children>
       </Pane>
+      <ImageView fitHeight="80.0" fitWidth="53.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PE.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import javafx.application.Application;
@@ -40,6 +41,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -158,7 +160,7 @@ public class PhotoEditor extends Application {
         return false;
     }
     
-    public static void alertBuilder(int message, AlertType type){
+    public static Optional<ButtonType> alertBuilder(int message, AlertType type){
         alert.setAlertType(type);
         alert.setTitle("PhotoEditor");
         alert.setHeaderText(null);
@@ -173,8 +175,12 @@ public class PhotoEditor extends Application {
             alert.setContentText("Language changed successfully ");
         }else if(message==5){
             alert.setContentText("Sorry, this Functionnality is under developpement !");
+        }else if(message==7){
+            alert.setContentText("Are you sure that you want to exit ?");
+        }else if(message==8){
+            alert.setContentText("Tags Updated successfully !");
         }
-        alert.showAndWait();
+        return alert.showAndWait();
     }
 
     /**

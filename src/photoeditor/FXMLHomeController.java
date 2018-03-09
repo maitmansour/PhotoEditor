@@ -26,7 +26,6 @@ package photoeditor;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,7 +34,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.PropertyResourceBundle;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
@@ -51,9 +50,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
@@ -64,6 +63,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -91,6 +91,8 @@ public class FXMLHomeController implements Initializable {
     private AnchorPane firstPane;
     @FXML
     private ImageView bigPicture;
+    @FXML
+    private ImageView peLogo;
 
     /**
      * Ordinary declarations
@@ -99,24 +101,39 @@ public class FXMLHomeController implements Initializable {
 
 
     @FXML
-    private void chooseExit(ActionEvent event){
-        Platform.exit();
+    private void chooseExit(ActionEvent event) {
+        Optional < ButtonType > result = PhotoEditor.alertBuilder(7, Alert.AlertType.CONFIRMATION);
+        if (result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
+    }
+
+    @FXML
+    private void aboutUs(ActionEvent event) {
+            Alert alert =new Alert(Alert.AlertType.NONE);
+
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+        alert.setTitle("PhotoEditor");
+        alert.setGraphic(peLogo);
+        alert.setHeaderText(null);
+            alert.setContentText("PhotoEditor V 1.0.0 \nMIT Licence ");
+            alert.showAndWait();
     }
     @FXML
-    private void chooseAnotherDirectory(ActionEvent event) throws Exception{
-      DirectoryChooser directoryChooser = new DirectoryChooser();
-      File selectedDirectory = directoryChooser.showDialog(null);
+    private void chooseAnotherDirectory(ActionEvent event) throws Exception {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(null);
         if (selectedDirectory == null) {
-            PhotoEditor.alertBuilder(1,Alert.AlertType.WARNING);
+            PhotoEditor.alertBuilder(1, Alert.AlertType.WARNING);
         } else {
             String path = selectedDirectory.getAbsolutePath();
             PhotoEditor.setSelectedPath(path);
             if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, PhotoEditor.FILE_TEXT_EXT)) {
                 initListView(null);
             } else {
-            PhotoEditor.alertBuilder(2,Alert.AlertType.WARNING);
+                PhotoEditor.alertBuilder(2, Alert.AlertType.WARNING);
             }
-    }
+        }
     }
     @FXML
     private void findByTagHandler(ActionEvent event) throws Exception {
@@ -126,14 +143,14 @@ public class FXMLHomeController implements Initializable {
             initListView(SearchTagValue.getText());
         }
     }
-    
+
     @FXML
-    public void onEnter(ActionEvent ae) throws Exception{
-       findByTagHandler(ae);
+    public void onEnter(ActionEvent ae) throws Exception {
+        findByTagHandler(ae);
     }
-    
-    private void selectItem() throws Exception{
-                String currentPicture = picturesList.getSelectionModel().getSelectedItem();
+
+    private void selectItem() throws Exception {
+        String currentPicture = picturesList.getSelectionModel().getSelectedItem();
         FXMLUpdatePictureController.tmpPicture = currentPicture;
         bigPicture.setImage(MapOfImages.get(currentPicture).getImage());
         bigPicture.setFitHeight(300);
@@ -152,7 +169,7 @@ public class FXMLHomeController implements Initializable {
         FXMLUpdatePictureController.tmpTags = sb.toString();
         pictureTagsValue.setText(sb.toString());
     }
-    
+
     /**
      * Fill the Big Picture Frame with clicked picture
      * @param event 
@@ -161,7 +178,7 @@ public class FXMLHomeController implements Initializable {
     private void clickOnItemHandler(MouseEvent event) throws Exception {
         selectItem();
     }
-    
+
     /**
      * Fill the Big Picture Frame with selected picture
      * @param event 
@@ -169,16 +186,16 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void ArrowsOnItemHandler(KeyEvent event) throws Exception {
         if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
-                   selectItem();
+            selectItem();
 
         }
-    }   
-    
+    }
+
     @FXML
-    private void onlineHelp(ActionEvent event) throws IOException, URISyntaxException{
+    private void onlineHelp(ActionEvent event) throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported()) {
-    Desktop.getDesktop().browse(new URI("https://github.com/maitmansour95/PhotoEditor"));
-}
+            Desktop.getDesktop().browse(new URI("https://github.com/maitmansour95/PhotoEditor"));
+        }
     }
     /**
      * Alert if functionnality is under dev.
@@ -265,22 +282,26 @@ public class FXMLHomeController implements Initializable {
         ObservableList < String > items = FXCollections.observableArrayList(
             listOfImagesPaths);
         picturesList.setItems(items);
-        picturesList.setCellFactory(param -> new ListCell < String > () {
+        picturesList.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+
             @Override
-            public void updateItem(String name, boolean empty) {
-                super.updateItem(name, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    //setText(name);
-                    setGraphic(MapOfImages.get(name));
-                }
-            }
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell < String > () {
+                    @Override
+                    public void updateItem(String name, boolean empty) {
+                        super.updateItem(name, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(MapOfImages.get(name));
+                        }
+                    }
+                };  }
         });
-
-
+        picturesList.getSelectionModel().selectFirst();
+        selectItem();
     }
-     
+
     /**
      * Load Lang and changes values of current textes to other language
      * @param lang 

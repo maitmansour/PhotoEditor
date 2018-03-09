@@ -32,6 +32,7 @@ import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -66,7 +67,8 @@ public class FXMLUpdatePictureController implements Initializable {
     for (String TagsPart : HashTagsParts) {
        PhotoEditor.getMapOfKeywords().get(tmpPicture).add(TagsPart);
    }
-        stage.close();
+    PhotoEditor.alertBuilder(8, Alert.AlertType.INFORMATION);
+    stage.hide();
     }
     
     /**
