@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="firstPane" prefHeight="523.0" prefWidth="870.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLHomeController">
+<AnchorPane fx:id="firstPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="855.0" style="-fx-background-color: rgba(0, 0, 0, 0.75);" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoeditor.FXMLHomeController">
    <children>
       <Pane layoutX="734.0" layoutY="32.0" prefHeight="300.0" prefWidth="128.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);">
          <children>
@@ -122,14 +123,15 @@
             <Image url="@../images/PE.png" />
          </image>
       </ImageView>
-      <Pane layoutX="650.0" layoutY="346.0" prefHeight="47.0" prefWidth="209.0" style="-fx-background-color: rgba(0, 0, 0, 0.25); -fx-background-radius: 10;">
+      <Pane layoutX="563.0" layoutY="346.0" prefHeight="71.0" prefWidth="287.0" style="-fx-background-color: white; -fx-background-radius: 10;">
          <children>
-            <TextField fx:id="SearchTagValue" layoutX="6.0" layoutY="6.0" onAction="#onEnter" prefHeight="35.0" prefWidth="132.0" promptText="%tagsSearch">
+            <TextField fx:id="SearchTagValue" layoutX="14.0" layoutY="16.0" onAction="#onEnter" prefHeight="35.0" prefWidth="144.0" promptText="%tagsSearch">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-            <Button layoutX="138.0" layoutY="5.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="60.0" text="%SearchBtn" />
+            <Button layoutX="155.0" layoutY="16.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="78.0" text="%SearchBtn" />
+            <ProgressIndicator fx:id="progressIndicator" layoutX="233.0" layoutY="8.0" prefHeight="57.0" prefWidth="53.0" progress="0.0" />
          </children>
       </Pane>
       <ImageView fitHeight="80.0" fitWidth="53.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">

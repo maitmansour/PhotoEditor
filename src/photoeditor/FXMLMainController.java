@@ -46,10 +46,6 @@ import javafx.stage.Stage;
  */
 public class FXMLMainController implements Initializable {
 
-
-    @FXML
-    private ProgressBar MainProgressBar;
-
     @FXML
     private void selectDirectoryHandler(MouseEvent event) throws IOException {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -84,8 +80,6 @@ public class FXMLMainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO : progress Bar 
-        MainProgressBar.setVisible(false);
     }
 
 }

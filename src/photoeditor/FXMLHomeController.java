@@ -42,7 +42,10 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
@@ -55,12 +58,14 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 
@@ -76,6 +81,8 @@ public class FXMLHomeController implements Initializable {
      */
     @FXML
     private ListView < String > picturesList;
+    @FXML
+    private ProgressIndicator progressIndicator;
     @FXML
     private Label pictureTitleName;
     @FXML
@@ -124,7 +131,8 @@ public class FXMLHomeController implements Initializable {
             String path = selectedDirectory.getAbsolutePath();
             PhotoEditor.setSelectedPath(path);
             if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, PhotoEditor.FILE_TEXT_EXT)) {
-                initListView(null);
+                fillListViewWorker(null);
+
             } else {
                 PhotoEditor.alertBuilder(2, Alert.AlertType.WARNING);
             }
@@ -133,10 +141,13 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void findByTagHandler(ActionEvent event) throws Exception {
         if (SearchTagValue.getText().equals("")) {
-            initListView(null);
+            fillListViewWorker(null);
         } else {
-            initListView(SearchTagValue.getText());
+            fillListViewWorker(SearchTagValue.getText());
         }
+
+
+
     }
 
     @FXML
@@ -253,65 +264,94 @@ public class FXMLHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             MapOfImages = new HashMap < > ();
-            initListView(null);
+            fillListViewWorker(null);
+
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-     * fill Listview
-     */
-    private void initListView(String Keyword) throws Exception {
-        picturesList.getItems().removeAll();
-        String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
-        
 
-        if (Keyword != null) {
-            Set < String > foundedList = new HashSet < > ();
-            for (Map.Entry < String, ArrayList > onPicture: PhotoEditor.getMapOfKeywords().entrySet()) {
-                for (int i = 0; i < onPicture.getValue().size(); i++) {
-                    if (onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase())) {
-                        if (Arrays.asList(listOfImagesPaths).contains(onPicture.getKey())) {
-                            foundedList.add(onPicture.getKey());
-                        }
-                    }
-                }
-            }
-            listOfImagesPaths = foundedList.toArray(new String[0]);
-        }
-
-        for (String listOfImagesPath: listOfImagesPaths) {
-            ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPath));
-            tmpImageView.setFitHeight(150);
-            tmpImageView.setFitWidth(150);
-            PhotoEditor.getMapOfKeywords().putIfAbsent(listOfImagesPath, new ArrayList());
-            MapOfImages.put(listOfImagesPath, tmpImageView);
-        }
-
-
-        ObservableList < String > items = FXCollections.observableArrayList(
-            listOfImagesPaths);
-        picturesList.setItems(items);
-        picturesList.setCellFactory(new Callback < ListView < String > , ListCell < String >> () {
-
+    public Task createWorker(String Keyword) {
+        return new Task() {
             @Override
-            public ListCell < String > call(ListView < String > param) {
-                return new ListCell < String > () {
-                    @Override
-                    public void updateItem(String name, boolean empty) {
-                        super.updateItem(name, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(MapOfImages.get(name));
+            protected Object call() throws Exception {
+                /**
+                 * fill Listview
+                 */
+                picturesList.getItems().removeAll();
+                String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
+
+
+                if (Keyword != null) {
+                    Set < String > foundedList = new HashSet < > ();
+                    for (Map.Entry < String, ArrayList > onPicture: PhotoEditor.getMapOfKeywords().entrySet()) {
+                        for (int i = 0; i < onPicture.getValue().size(); i++) {
+                            if (onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase())) {
+                                if (Arrays.asList(listOfImagesPaths).contains(onPicture.getKey())) {
+                                    foundedList.add(onPicture.getKey());
+                                }
+                            }
                         }
                     }
-                };
+                    listOfImagesPaths = foundedList.toArray(new String[0]);
+                }
+
+                double step = 1.000 / listOfImagesPaths.length;
+                double progress = step;
+                for (String listOfImagesPath: listOfImagesPaths) {
+                    updateProgress(progress, 1);
+                    System.out.println(progress);
+                    progress += step;
+                    ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPath));
+                    tmpImageView.setFitHeight(150);
+                    tmpImageView.setFitWidth(150);
+                    PhotoEditor.getMapOfKeywords().putIfAbsent(listOfImagesPath, new ArrayList());
+                    MapOfImages.put(listOfImagesPath, tmpImageView);
+                }
+                ObservableList < String > items = FXCollections.observableArrayList(
+                    listOfImagesPaths);
+
+                return items;
+            }
+        };
+    }
+
+    private void fillListViewWorker(String Keyword) {
+        Task fillListView = createWorker(Keyword);
+        fillListView.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                picturesList.setItems((ObservableList < String > ) fillListView.getValue());
+                picturesList.setCellFactory(new Callback < ListView < String > , ListCell < String >> () {
+
+                    @Override
+                    public ListCell < String > call(ListView < String > param) {
+                        return new ListCell < String > () {
+                            @Override
+                            public void updateItem(String name, boolean empty) {
+                                super.updateItem(name, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                } else {
+                                    setGraphic(MapOfImages.get(name));
+                                }
+                            }
+                        };
+                    }
+                });
+
             }
         });
-        picturesList.getSelectionModel().selectFirst();
-        selectItem();
+        progressIndicator.progressProperty().unbind();
+        progressIndicator.progressProperty().bind(fillListView.progressProperty());
+        progressIndicator.progressProperty().addListener((obs, oldValue, newValue) -> {
+        if (newValue.doubleValue() >= 1.0) {
+            Text doneText = (Text) progressIndicator.lookup(".percentage");
+            doneText.setText(PhotoEditor.getBundleByLocal().getString("done"));
+        }
+    });
+        new Thread(fillListView).start();
     }
 
 }
