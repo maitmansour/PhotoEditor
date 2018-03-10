@@ -184,7 +184,7 @@ public class FXMLHomeController implements Initializable {
      * @param event 
      */
     @FXML
-    private void ArrowsOnItemHandler(KeyEvent event) throws Exception {
+    private void arrowsOnItemHandler(KeyEvent event) throws Exception {
         if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
             selectItem();
 
