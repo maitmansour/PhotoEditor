@@ -64,6 +64,13 @@ public class PhotoEditor extends Application {
     public static Locale locale;
     public static NodeOrientation nodeOrientation;
 
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -78,7 +85,23 @@ public class PhotoEditor extends Application {
         stage.setScene(scene);
         stage.show();
     }
+    
+    /**
+     * Stop stage and Freeze keywords and configuration
+     * @throws Exception 
+     */
+    @Override
+    public void stop() throws Exception {
+        freezeKeywordsMap();
+        freezeConfiguration();
 
+    }
+    
+    /**
+     * Load scene on language switch
+     * @param orientation
+     * @throws IOException 
+     */
     public void reload(Boolean orientation) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLHome.fxml"), getBundleByLocal());
         Scene scene = new Scene(root);
@@ -92,12 +115,6 @@ public class PhotoEditor extends Application {
         stage.setScene(scene);
         stage.show();
 
-    }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**
@@ -119,7 +136,6 @@ public class PhotoEditor extends Application {
         return PhotoEditor.extentionAndFileFounder;
     }
 
-
     /**
      * SelectedPath Setter
      * @param selectedPath 
@@ -137,7 +153,6 @@ public class PhotoEditor extends Application {
         return "file:///" + PhotoEditor.getSelectedPath() + "\\" + imageName;
     }
 
-
     /**
      * ExtentionAndFileFounder Getter / Singleton
      * @return FindCertainExtension Instance
@@ -150,7 +165,6 @@ public class PhotoEditor extends Application {
         return PhotoEditor.MapOfKeywords;
     }
 
-
     /**
      * freeze keywords Map
      * @throws Exception 
@@ -161,7 +175,6 @@ public class PhotoEditor extends Application {
             writer.writeObject(getMapOfKeywords());
         }
     }
-
 
     /**
      * freeze keywords Map
@@ -191,8 +204,6 @@ public class PhotoEditor extends Application {
         return false;
     }
 
-
-
     /**
      * unfreeze keywords and fill MapOfKeywords
      * @return
@@ -207,7 +218,6 @@ public class PhotoEditor extends Application {
                 savedLocal = in .next();
             }
             setLocal(savedLocal);
-            System.out.println(savedLocal);
             if (savedLocal.contains("ar")) {
                 nodeOrientation = NodeOrientation.RIGHT_TO_LEFT;
             } else {
@@ -223,6 +233,12 @@ public class PhotoEditor extends Application {
         return false;
     }
 
+    /**
+     * built Alert using messages and type
+     * @param message
+     * @param type
+     * @return 
+     */
     public static Optional < ButtonType > alertBuilder(int message, AlertType type) {
         alert.setAlertType(type);
         alert.setTitle("PhotoEditor");
@@ -248,7 +264,7 @@ public class PhotoEditor extends Application {
             alert.setContentText(bundle.getString("alert9"));
         }
                 if (type==AlertType.CONFIRMATION) {
-  ButtonType buttonYes = new ButtonType(bundle.getString("buttonYes"), ButtonBar.ButtonData.YES);
+        ButtonType buttonYes = new ButtonType(bundle.getString("buttonYes"), ButtonBar.ButtonData.YES);
         ButtonType buttonNo = new ButtonType(bundle.getString("buttonNo") , ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(buttonYes,buttonNo);
                 }
@@ -256,28 +272,29 @@ public class PhotoEditor extends Application {
     }
 
     /**
-     * Stop stage and Freeze keywords
-     * @throws Exception 
+     * set Local by string
+     * @param loc 
      */
-    @Override
-    public void stop() throws Exception {
-        freezeKeywordsMap();
-        freezeConfiguration();
-
-    }
-
-    static void setLocal(String loc) {
+    public static void setLocal(String loc) {
         if (loc == null) {
             locale = Locale.getDefault();
         } else {
             locale = new Locale(loc);
         }
     }
-    static String getLocal() {
-
+    /**
+     * get used Local
+     * @return local String
+     */
+    public static String getLocal() {
         return locale.toString();
     }
-    static ResourceBundle getBundleByLocal() {
+    
+    /**
+     * Get bundle by used locale
+     * @return 
+     */
+    public static ResourceBundle getBundleByLocal() {
         return ResourceBundle.getBundle("bundles.lang", locale);
     }
 

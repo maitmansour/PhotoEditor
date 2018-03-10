@@ -30,6 +30,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -264,13 +265,16 @@ public class FXMLHomeController implements Initializable {
     private void initListView(String Keyword) throws Exception {
         picturesList.getItems().removeAll();
         String[] listOfImagesPaths = PhotoEditor.getExtentionAndFileFounder().getFilesList(PhotoEditor.getSelectedPath(), ".jpg");
+        
 
         if (Keyword != null) {
             Set < String > foundedList = new HashSet < > ();
             for (Map.Entry < String, ArrayList > onPicture: PhotoEditor.getMapOfKeywords().entrySet()) {
                 for (int i = 0; i < onPicture.getValue().size(); i++) {
                     if (onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase())) {
-                        foundedList.add(onPicture.getKey());
+                        if (Arrays.asList(listOfImagesPaths).contains(onPicture.getKey())) {
+                            foundedList.add(onPicture.getKey());
+                        }
                     }
                 }
             }

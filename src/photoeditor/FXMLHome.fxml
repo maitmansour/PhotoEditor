@@ -65,12 +65,12 @@
                   <Image url="@../images/update.png" />
                </image>
             </ImageView>
-            <Label fx:id="updateBtn" layoutX="126.0" layoutY="198.0" prefHeight="49.0" prefWidth="100.0" text="%updateBtn" textFill="WHITE">
+            <Label fx:id="updateBtn" layoutX="126.0" layoutY="198.0" prefHeight="49.0" prefWidth="100.0" text="%updateBtn" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="System Bold" size="25.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" />
+            <Button layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" wrapText="true" />
             <Label fx:id="tagsLabel" layoutX="14.0" layoutY="78.0" prefHeight="49.0" prefWidth="100.0" text="%tagsLabel" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
