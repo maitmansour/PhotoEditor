@@ -45,6 +45,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -226,24 +227,31 @@ public class PhotoEditor extends Application {
         alert.setAlertType(type);
         alert.setTitle("PhotoEditor");
         alert.setHeaderText(null);
+        ResourceBundle bundle =getBundleByLocal();
 
+      
         if (message == 1) {
-            alert.setContentText("Please Select a directory !");
+            alert.setContentText(bundle.getString("alert1"));
         } else if (message == 2) {
-            alert.setContentText("Please Select a directory that contains images !");
+            alert.setContentText(bundle.getString("alert2"));
         } else if (message == 3) {
-            alert.setContentText("Please a valid tag ! ");
+            alert.setContentText(bundle.getString("alert3"));
         } else if (message == 4) {
-            alert.setContentText("Language changed successfully ");
+            alert.setContentText(bundle.getString("alert4"));
         } else if (message == 5) {
-            alert.setContentText("Sorry, this Functionnality is under developpement !");
+            alert.setContentText(bundle.getString("alert5"));
         } else if (message == 7) {
-            alert.setContentText("Are you sure that you want to exit ?");
+            alert.setContentText(bundle.getString("alert7"));
         } else if (message == 8) {
-            alert.setContentText("Tags Updated successfully !");
+            alert.setContentText(bundle.getString("alert8"));
         } else if (message == 9) {
-            alert.setContentText("You are trying to switch to a language that is already applied !");
+            alert.setContentText(bundle.getString("alert9"));
         }
+                if (type==AlertType.CONFIRMATION) {
+  ButtonType buttonYes = new ButtonType(bundle.getString("buttonYes"), ButtonBar.ButtonData.YES);
+        ButtonType buttonNo = new ButtonType(bundle.getString("buttonNo") , ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(buttonYes,buttonNo);
+                }
         return alert.showAndWait();
     }
 

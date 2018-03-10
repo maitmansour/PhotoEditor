@@ -50,12 +50,12 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="pictureTitleName" alignment="TOP_LEFT" layoutX="122.0" layoutY="23.0" prefHeight="71.0" prefWidth="209.0" text="Please select a picture " textFill="WHITE" wrapText="true">
+            <Label fx:id="pictureTitleName" alignment="TOP_LEFT" layoutX="122.0" layoutY="23.0" prefHeight="71.0" prefWidth="209.0" text="%pictureTitleName" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label fx:id="pictureTagsValue" alignment="TOP_LEFT" layoutX="118.0" layoutY="94.0" prefHeight="84.0" prefWidth="233.0" text="No Picture was selected " textFill="WHITE" wrapText="true">
+            <Label fx:id="pictureTagsValue" alignment="TOP_LEFT" layoutX="118.0" layoutY="94.0" prefHeight="84.0" prefWidth="233.0" text="%pictureTagsValue" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="17.0" />
                </font>
@@ -65,7 +65,7 @@
                   <Image url="@../images/update.png" />
                </image>
             </ImageView>
-            <Label layoutX="126.0" layoutY="198.0" prefHeight="49.0" prefWidth="100.0" text="Update" textFill="WHITE">
+            <Label fx:id="updateBtn" layoutX="126.0" layoutY="198.0" prefHeight="49.0" prefWidth="100.0" text="%updateBtn" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
@@ -81,23 +81,23 @@
       <ListView fx:id="picturesList" layoutX="14.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onInputMethodTextChanged="#onEnter" onKeyReleased="#arrowsOnItemHandler" onMouseClicked="#clickOnItemHandler" orientation="HORIZONTAL" prefHeight="180.0" prefWidth="851.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);" styleClass=".list-view .scroll-bar:horizontal .increment-arrow,.list-view .scroll-bar:horizontal .decrement-arrow,.list-view .scroll-bar:horizontal .increment-button,.list-view .scroll-bar:horizontal .decrement-button {    -fx-padding:0;}" />
       <MenuBar layoutX="47.0" layoutY="2.0" prefHeight="28.0" prefWidth="816.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="%file">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#chooseAnotherDirectory" text="Change directory" />
-                  <MenuItem mnemonicParsing="false" onAction="#chooseExit" text="Exit" />
+              <MenuItem mnemonicParsing="false" onAction="#chooseAnotherDirectory" text="%changeDirectory" />
+                  <MenuItem mnemonicParsing="false" onAction="#chooseExit" text="%exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Language">
+          <Menu mnemonicParsing="false" text="%language">
             <items>
               <MenuItem fx:id="fr" mnemonicParsing="false" onAction="#langChoosed" text="Français" />
                   <MenuItem fx:id="en" mnemonicParsing="false" onAction="#langChoosed" text="English" />
                   <MenuItem fx:id="ar" mnemonicParsing="false" onAction="#langChoosed" text="العربية" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="%help">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onlineHelp" text="Online Help" />
-                  <MenuItem mnemonicParsing="false" onAction="#aboutUs" text="About Us" />
+              <MenuItem mnemonicParsing="false" onAction="#onlineHelp" text="%onlineHelp" />
+                  <MenuItem mnemonicParsing="false" onAction="#aboutUs" text="%aboutUs" />
             </items>
           </Menu>
         </menus>
@@ -109,12 +109,12 @@
       </ImageView>
       <Pane layoutX="650.0" layoutY="346.0" prefHeight="47.0" prefWidth="209.0" style="-fx-background-color: rgba(0, 0, 0, 0.25); -fx-background-radius: 10;">
          <children>
-            <TextField fx:id="SearchTagValue" layoutX="6.0" layoutY="6.0" onAction="#onEnter" prefHeight="35.0" prefWidth="132.0" promptText="Tags...">
+            <TextField fx:id="SearchTagValue" layoutX="6.0" layoutY="6.0" onAction="#onEnter" prefHeight="35.0" prefWidth="132.0" promptText="%tagsSearch">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-            <Button layoutX="138.0" layoutY="5.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="60.0" text="Find" />
+            <Button layoutX="138.0" layoutY="5.0" mnemonicParsing="false" onAction="#findByTagHandler" prefHeight="35.0" prefWidth="60.0" text="%SearchBtn" />
          </children>
       </Pane>
       <ImageView fitHeight="80.0" fitWidth="53.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">

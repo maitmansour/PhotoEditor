@@ -32,7 +32,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -51,10 +50,10 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
@@ -75,15 +74,9 @@ public class FXMLHomeController implements Initializable {
      * FXML Declarations
      */
     @FXML
-    private ResourceBundle resources;
-    @FXML
-    private Label titleLabel, tagsLabel;
-    @FXML
     private ListView < String > picturesList;
     @FXML
     private Label pictureTitleName;
-    @FXML
-    private MenuItem ar, fr, en;
     @FXML
     private TextField SearchTagValue;
     @FXML
@@ -104,7 +97,7 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void chooseExit(ActionEvent event) {
         Optional < ButtonType > result = PhotoEditor.alertBuilder(7, Alert.AlertType.CONFIRMATION);
-        if (result.get() == ButtonType.OK) {
+        if (result.get().getButtonData() == ButtonBar.ButtonData.YES) {
             Platform.exit();
         }
     }

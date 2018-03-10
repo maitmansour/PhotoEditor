@@ -26,7 +26,6 @@ package photoeditor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import java.io.File;
@@ -48,9 +47,6 @@ import javafx.stage.Stage;
 public class FXMLMainController implements Initializable {
 
 
-
-    @FXML
-    private Label selectedDirectoryText;
     @FXML
     private ProgressBar MainProgressBar;
 

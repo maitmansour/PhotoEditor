@@ -36,7 +36,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import photoeditor.PhotoEditor;
+
 /**
  * FXML Controller class
  *
@@ -48,9 +48,6 @@ public class FXMLUpdatePictureController implements Initializable {
         public static String tmpPicture;
 
  @FXML 
- private javafx.scene.control.Button saveButton;
- 
- @FXML 
  private TextArea tagsTextArea;
  
  @FXML 
@@ -59,7 +56,7 @@ public class FXMLUpdatePictureController implements Initializable {
         
     @FXML
     private void saveHandler(ActionEvent event) throws IOException, Exception {
-    Stage stage = (Stage) saveButton.getScene().getWindow();
+    Stage stage = (Stage) titleTextField.getScene().getWindow();
     String currentPictureTags = tagsTextArea.getText().toUpperCase();
     String[] TagsParts = currentPictureTags.split(",");
     Set<String> HashTagsParts = new HashSet<>(Arrays.asList(TagsParts));
