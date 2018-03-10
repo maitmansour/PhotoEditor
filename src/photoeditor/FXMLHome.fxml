@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -70,7 +71,14 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" wrapText="true" />
+            <Button layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" wrapText="true">
+               <tooltip>
+                  <Tooltip text="%updateToolTip">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip></Button>
             <Label fx:id="tagsLabel" layoutX="14.0" layoutY="78.0" prefHeight="49.0" prefWidth="100.0" text="%tagsLabel" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
@@ -78,7 +86,14 @@
             </Label>
          </children>
       </Pane>
-      <ListView fx:id="picturesList" layoutX="14.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onInputMethodTextChanged="#onEnter" onKeyReleased="#arrowsOnItemHandler" onMouseClicked="#clickOnItemHandler" orientation="HORIZONTAL" prefHeight="180.0" prefWidth="851.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);" styleClass=".list-view .scroll-bar:horizontal .increment-arrow,.list-view .scroll-bar:horizontal .decrement-arrow,.list-view .scroll-bar:horizontal .increment-button,.list-view .scroll-bar:horizontal .decrement-button {    -fx-padding:0;}" />
+      <ListView fx:id="picturesList" layoutX="14.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onInputMethodTextChanged="#onEnter" onKeyReleased="#arrowsOnItemHandler" onMouseClicked="#clickOnItemHandler" orientation="HORIZONTAL" prefHeight="180.0" prefWidth="851.0" style="-fx-background-color: rgba(0, 0, 0, 0.25);" styleClass=".list-view .scroll-bar:horizontal .increment-arrow,.list-view .scroll-bar:horizontal .decrement-arrow,.list-view .scroll-bar:horizontal .increment-button,.list-view .scroll-bar:horizontal .decrement-button {    -fx-padding:0;}">
+         <tooltip>
+            <Tooltip text="%helpListView">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip></ListView>
       <MenuBar layoutX="47.0" layoutY="2.0" prefHeight="28.0" prefWidth="816.0">
         <menus>
           <Menu mnemonicParsing="false" text="%file">
