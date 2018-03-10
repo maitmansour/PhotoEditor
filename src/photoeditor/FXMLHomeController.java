@@ -49,7 +49,6 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -76,7 +75,9 @@ public class FXMLHomeController implements Initializable {
      * FXML Declarations
      */
     @FXML
-    private Label titleLabel;
+    private ResourceBundle resources;
+    @FXML
+    private Label titleLabel, tagsLabel;
     @FXML
     private ListView < String > picturesList;
     @FXML
@@ -110,14 +111,14 @@ public class FXMLHomeController implements Initializable {
 
     @FXML
     private void aboutUs(ActionEvent event) {
-            Alert alert =new Alert(Alert.AlertType.NONE);
+        Alert alert = new Alert(Alert.AlertType.NONE);
 
-                alert.setAlertType(Alert.AlertType.INFORMATION);
+        alert.setAlertType(Alert.AlertType.INFORMATION);
         alert.setTitle("PhotoEditor");
         alert.setGraphic(peLogo);
         alert.setHeaderText(null);
-            alert.setContentText("PhotoEditor V 1.0.0 \nMIT Licence ");
-            alert.showAndWait();
+        alert.setContentText("PhotoEditor V 1.0.0 \nMIT Licence ");
+        alert.showAndWait();
     }
     @FXML
     private void chooseAnotherDirectory(ActionEvent event) throws Exception {
@@ -206,20 +207,31 @@ public class FXMLHomeController implements Initializable {
         PhotoEditor.alertBuilder(5, Alert.AlertType.ERROR);
     }
 
+
     /**
      * Update View Language
      * @param event 
      */
     @FXML
-    private void langChoosed(ActionEvent event) {
+    private void langChoosed(ActionEvent event) throws IOException {
+
         String lang = event.getSource().toString().subSequence(12, 14).toString();
-        loadLang(lang);
-        if ("ar".equals(lang)) {
-            firstPane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        if (lang.equals(PhotoEditor.getLocal())) {
+            PhotoEditor.alertBuilder(9, Alert.AlertType.WARNING);
         } else {
-            firstPane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+            PhotoEditor.setLocal(lang);
+            Stage app_stage = (Stage) firstPane.getScene().getWindow();
+            app_stage.close();
+            PhotoEditor reload = new PhotoEditor();
+            if ("ar".equals(lang)) {
+                reload.reload(true);
+            } else {
+                reload.reload(false);
+
+            }
+            PhotoEditor.alertBuilder(4, Alert.AlertType.INFORMATION);
+
         }
-        PhotoEditor.alertBuilder(4, Alert.AlertType.INFORMATION);
     }
 
     /**
@@ -230,10 +242,12 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void updateHandler(ActionEvent event) throws IOException {
         //System.out.println(PhotoEditor.getSelectedPath());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"), PhotoEditor.getBundleByLocal());
         Parent rootWindow = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
-        stage.setScene(new Scene(rootWindow));
+        Scene scene = new Scene(rootWindow);
+        scene.setNodeOrientation(PhotoEditor.nodeOrientation);
+        stage.setScene(scene);
         stage.show();
     }
     /**
@@ -282,10 +296,10 @@ public class FXMLHomeController implements Initializable {
         ObservableList < String > items = FXCollections.observableArrayList(
             listOfImagesPaths);
         picturesList.setItems(items);
-        picturesList.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        picturesList.setCellFactory(new Callback < ListView < String > , ListCell < String >> () {
 
             @Override
-            public ListCell<String> call(ListView<String> param) {
+            public ListCell < String > call(ListView < String > param) {
                 return new ListCell < String > () {
                     @Override
                     public void updateItem(String name, boolean empty) {
@@ -296,21 +310,11 @@ public class FXMLHomeController implements Initializable {
                             setGraphic(MapOfImages.get(name));
                         }
                     }
-                };  }
+                };
+            }
         });
         picturesList.getSelectionModel().selectFirst();
         selectItem();
-    }
-
-    /**
-     * Load Lang and changes values of current textes to other language
-     * @param lang 
-     */
-    private void loadLang(String lang) {
-        // TODO : Complete internationnalization
-        Locale locale = new Locale(lang);
-        ResourceBundle bundle = ResourceBundle.getBundle("bundles.lang", locale);
-        titleLabel.setText(bundle.getString("titleLabel"));
     }
 
 }

@@ -31,8 +31,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.PropertyResourceBundle;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,7 +40,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
-import photoeditor.PhotoEditor;
 
 /**
  *
@@ -67,13 +64,13 @@ public class FXMLMainController implements Initializable {
             String path = selectedDirectory.getAbsolutePath();
             PhotoEditor.setSelectedPath(path);
             if (PhotoEditor.getExtentionAndFileFounder().checkFileExistence(path, PhotoEditor.FILE_TEXT_EXT)) {
-                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                InputStream inputStream = classLoader.getResource("bundles/lang_en.properties").openStream();
-                ResourceBundle bundle = new PropertyResourceBundle(inputStream);
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"), bundle);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLHome.fxml"), PhotoEditor.getBundleByLocal());
                 Parent rootWindow = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
-                stage.setScene(new Scene(rootWindow));
+                 Scene scene = new Scene(rootWindow);
+                scene.setNodeOrientation(PhotoEditor.nodeOrientation);
+                        stage.setScene(scene);
+
                 Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
                 stage.show();
