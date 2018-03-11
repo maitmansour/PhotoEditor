@@ -58,6 +58,7 @@ public class FXMLUpdatePictureController implements Initializable {
     private void saveHandler(ActionEvent event) throws IOException, Exception {
     Stage stage = (Stage) titleTextField.getScene().getWindow();
     String currentPictureTags = tagsTextArea.getText().toUpperCase();
+    tmpTags=currentPictureTags;
     String[] TagsParts = currentPictureTags.split(",");
     Set<String> HashTagsParts = new HashSet<>(Arrays.asList(TagsParts));
     PhotoEditor.getMapOfKeywords().get(tmpPicture).clear();

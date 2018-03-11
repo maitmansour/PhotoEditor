@@ -72,7 +72,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" wrapText="true">
+            <Button fx:id="homeUpdateBtn" layoutX="58.0" layoutY="198.0" mnemonicParsing="false" onAction="#updateHandler" prefHeight="51.0" prefWidth="209.0" style="-fx-background-color: transparent;" wrapText="true">
                <tooltip>
                   <Tooltip text="%updateToolTip">
                      <font>

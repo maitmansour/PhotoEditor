@@ -256,13 +256,17 @@ public class PhotoEditor extends Application {
             alert.setContentText(bundle.getString("alert4"));
         } else if (message == 5) {
             alert.setContentText(bundle.getString("alert5"));
+        }  else if (message == 6) {
+            alert.setContentText(bundle.getString("alert6"));
         } else if (message == 7) {
             alert.setContentText(bundle.getString("alert7"));
         } else if (message == 8) {
             alert.setContentText(bundle.getString("alert8"));
         } else if (message == 9) {
             alert.setContentText(bundle.getString("alert9"));
-        }
+        } else if (message == 10) {
+            alert.setContentText(bundle.getString("alert10"));
+        } 
                 if (type==AlertType.CONFIRMATION) {
         ButtonType buttonYes = new ButtonType(bundle.getString("buttonYes"), ButtonBar.ButtonData.YES);
         ButtonType buttonNo = new ButtonType(bundle.getString("buttonNo") , ButtonBar.ButtonData.NO);

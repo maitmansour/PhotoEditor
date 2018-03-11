@@ -54,6 +54,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
@@ -95,6 +96,8 @@ public class FXMLHomeController implements Initializable {
     private ImageView bigPicture;
     @FXML
     private ImageView peLogo;
+    @FXML
+    private Button homeUpdateBtn;
 
     /**
      * Ordinary declarations
@@ -200,7 +203,10 @@ public class FXMLHomeController implements Initializable {
     @FXML
     private void onlineHelp(ActionEvent event) throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported()) {
+            PhotoEditor.alertBuilder(6, Alert.AlertType.INFORMATION);
             Desktop.getDesktop().browse(new URI("https://github.com/maitmansour95/PhotoEditor"));
+        }else{
+            PhotoEditor.alertBuilder(10, Alert.AlertType.WARNING);
         }
     }
     /**
@@ -246,14 +252,16 @@ public class FXMLHomeController implements Initializable {
      */
     @FXML
     private void updateHandler(ActionEvent event) throws IOException {
-        //System.out.println(PhotoEditor.getSelectedPath());
+        homeUpdateBtn.getParent().getParent().setDisable(true);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLUpdatePicture.fxml"), PhotoEditor.getBundleByLocal());
         Parent rootWindow = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
         Scene scene = new Scene(rootWindow);
         scene.setNodeOrientation(PhotoEditor.nodeOrientation);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
+        pictureTagsValue.setText(FXMLUpdatePictureController.tmpTags);
+        homeUpdateBtn.getParent().getParent().setDisable(false);
     }
     /**
      * Initializes the controller class.
@@ -263,8 +271,10 @@ public class FXMLHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            homeUpdateBtn.setDisable(true);
             MapOfImages = new HashMap < > ();
             fillListViewWorker(null);
+            
 
         } catch (Exception ex) {
             Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -287,21 +297,19 @@ public class FXMLHomeController implements Initializable {
                     Set < String > foundedList = new HashSet < > ();
                     for (Map.Entry < String, ArrayList > onPicture: PhotoEditor.getMapOfKeywords().entrySet()) {
                         for (int i = 0; i < onPicture.getValue().size(); i++) {
-                            if (onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase())) {
-                                if (Arrays.asList(listOfImagesPaths).contains(onPicture.getKey())) {
-                                    foundedList.add(onPicture.getKey());
-                                }
+                            if (onPicture.getValue().get(i).toString().contains(Keyword.toUpperCase()) && Arrays.asList(listOfImagesPaths).contains(onPicture.getKey())) {
+                                foundedList.add(onPicture.getKey());
                             }
                         }
                     }
                     listOfImagesPaths = foundedList.toArray(new String[0]);
                 }
-
+                
+                if (listOfImagesPaths.length>0) {
                 double step = 1.000 / listOfImagesPaths.length;
                 double progress = step;
                 for (String listOfImagesPath: listOfImagesPaths) {
-                    updateProgress(progress, 1);
-                    System.out.println(progress);
+                    updateProgress(progress, 0.999);
                     progress += step;
                     ImageView tmpImageView = new ImageView(PhotoEditor.prepareImagePath(listOfImagesPath));
                     tmpImageView.setFitHeight(150);
@@ -311,14 +319,29 @@ public class FXMLHomeController implements Initializable {
                 }
                 ObservableList < String > items = FXCollections.observableArrayList(
                     listOfImagesPaths);
+                                return items;
 
-                return items;
+                }
+                      updateProgress(1, 1);
+  
+                this.cancel();
+                return null;
+
             }
         };
     }
 
     private void fillListViewWorker(String Keyword) {
         Task fillListView = createWorker(Keyword);
+                       
+
+        fillListView.setOnCancelled(new EventHandler < WorkerStateEvent > () {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                PhotoEditor.alertBuilder(3, Alert.AlertType.WARNING);
+                SearchTagValue.setText("");
+                        }
+        });
         fillListView.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
             @Override
             public void handle(WorkerStateEvent event) {
@@ -341,16 +364,29 @@ public class FXMLHomeController implements Initializable {
                     }
                 });
 
+                                   picturesList.getSelectionModel().selectFirst();
+        try {
+            selectItem();
+            if (homeUpdateBtn.isDisabled()) {
+            homeUpdateBtn.setDisable(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
             }
         });
-        progressIndicator.progressProperty().unbind();
-        progressIndicator.progressProperty().bind(fillListView.progressProperty());
-        progressIndicator.progressProperty().addListener((obs, oldValue, newValue) -> {
-        if (newValue.doubleValue() >= 1.0) {
-            Text doneText = (Text) progressIndicator.lookup(".percentage");
-            doneText.setText(PhotoEditor.getBundleByLocal().getString("done"));
-        }
-    });
+
+            progressIndicator.progressProperty().unbind();
+            progressIndicator.progressProperty().bind(fillListView.progressProperty());
+            progressIndicator.progressProperty().addListener((obs, oldValue, newValue) -> {
+                if (newValue.doubleValue() >= 1.0) {
+                    Text doneText = (Text) progressIndicator.lookup(".percentage");
+                    doneText.setText(PhotoEditor.getBundleByLocal().getString("done"));
+                }
+            });
+
+
+          
         new Thread(fillListView).start();
     }
 

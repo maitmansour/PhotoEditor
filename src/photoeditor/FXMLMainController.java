@@ -80,6 +80,7 @@ public class FXMLMainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //initialize
     }
 
 }
