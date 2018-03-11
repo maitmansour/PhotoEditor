@@ -18,8 +18,7 @@
 - NetBeans
 - Scene Builder
 - JavaFX
-- Task
-
+- JavaFX Concurrent Task
 
 ## How the app look like ?
 - Preloader
@@ -30,7 +29,6 @@
 
 ![PhotoEditor Main](https://i.imgur.com/aP0sVCu.png)
 
-
 - Right To Left Language
 
 ![Right To Left Language](https://i.imgur.com/9gzgbue.png)
@@ -39,14 +37,12 @@
 
 ![PhotoEditor Exit Confirmation](https://i.imgur.com/T4YXLgh.png)
 
+## How to get .JAR from Netbeans
+- Clean and Build
+- Go to dist Folder (On Project Repository)
+- You will find the JAR file there !
 
 ## How to use
 - Import project to Netbeans
 - Build and clean
 - Run and enjoy !
-- Task
-
-## How to get .JAR from Netbeans
-- Clean and Build
-- Go to dist Folder (On Project Repository)
-- You will find the JAR file there !
