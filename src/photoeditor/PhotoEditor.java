@@ -113,6 +113,7 @@ public class PhotoEditor extends Application {
         }
         scene.setNodeOrientation(nodeOrientation);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
     }
@@ -268,10 +269,16 @@ public class PhotoEditor extends Application {
         } else if (message == 10) {
             alert.setContentText(bundle.getString("alert10"));
         } 
-                if (type==AlertType.CONFIRMATION) {
-        ButtonType buttonYes = new ButtonType(bundle.getString("buttonYes"), ButtonBar.ButtonData.YES);
-        ButtonType buttonNo = new ButtonType(bundle.getString("buttonNo") , ButtonBar.ButtonData.NO);
-        alert.getButtonTypes().setAll(buttonYes,buttonNo);
+        if (type==AlertType.CONFIRMATION) {
+             Alert alertConfirmation =new Alert(AlertType.CONFIRMATION);
+              alertConfirmation.setAlertType(type);
+            alertConfirmation.setTitle("PhotoEditor");
+            alertConfirmation.setHeaderText(null);
+            alertConfirmation.setContentText(alert.getContentText());
+            ButtonType buttonYes = new ButtonType(bundle.getString("buttonYes"), ButtonBar.ButtonData.YES);
+            ButtonType buttonNo = new ButtonType(bundle.getString("buttonNo") , ButtonBar.ButtonData.NO);
+            alertConfirmation.getButtonTypes().setAll(buttonYes,buttonNo);
+        return alertConfirmation.showAndWait();
                 }
         return alert.showAndWait();
     }

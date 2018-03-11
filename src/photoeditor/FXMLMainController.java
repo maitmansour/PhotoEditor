@@ -65,6 +65,7 @@ public class FXMLMainController implements Initializable {
 
                 Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 app_stage.hide();
+                stage.setResizable(false);
                 stage.show();
             } else {
             PhotoEditor.alertBuilder(2,Alert.AlertType.WARNING);

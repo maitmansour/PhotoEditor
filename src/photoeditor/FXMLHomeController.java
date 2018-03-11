@@ -204,7 +204,7 @@ public class FXMLHomeController implements Initializable {
     private void onlineHelp(ActionEvent event) throws IOException, URISyntaxException {
         if (Desktop.isDesktopSupported()) {
             PhotoEditor.alertBuilder(6, Alert.AlertType.INFORMATION);
-            Desktop.getDesktop().browse(new URI("https://github.com/maitmansour95/PhotoEditor"));
+            Desktop.getDesktop().browse(new URI("https://www.numidea.com/"));
         }else{
             PhotoEditor.alertBuilder(10, Alert.AlertType.WARNING);
         }
@@ -259,6 +259,7 @@ public class FXMLHomeController implements Initializable {
         Scene scene = new Scene(rootWindow);
         scene.setNodeOrientation(PhotoEditor.nodeOrientation);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.showAndWait();
         pictureTagsValue.setText(FXMLUpdatePictureController.tmpTags);
         homeUpdateBtn.getParent().getParent().setDisable(false);
