@@ -12,7 +12,7 @@
 - [x] Update a Picture Tags 
 - [x] Internationalization (Ar/Fr/En)
 - [ ] Crop / Rotate / Slide
-- [x] Find by Keyword
+- [x] Find pictures by Keyword
 
 ## Technologies
 - NetBeans
@@ -20,7 +20,7 @@
 - JavaFX
 - JavaFX Concurrent Task
 
-## How the app look like ?
+## How the app looks like ?
 - Preloader
 
 ![PhotoEditor Preloader](https://i.imgur.com/6Rva6p7.png)
