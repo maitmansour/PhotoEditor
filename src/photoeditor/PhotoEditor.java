@@ -200,6 +200,7 @@ public class PhotoEditor extends Application {
             }
             return true;
         }
+        f.getParentFile().mkdirs();
         f.createNewFile();
         return false;
     }
@@ -211,7 +212,6 @@ public class PhotoEditor extends Application {
      */
     public static boolean unFreezeConfiguration() throws Exception {
         File f = new File("src/data/configuration.dat");
-
         if (f.exists() && !f.isDirectory()) {
             String savedLocal;
             try (Scanner in = new Scanner(new FileReader("src/data/configuration.dat"))) {
@@ -225,6 +225,7 @@ public class PhotoEditor extends Application {
             }
             return true;
         } else {
+            f.getParentFile().mkdirs();
             locale = Locale.getDefault();
             nodeOrientation = NodeOrientation.LEFT_TO_RIGHT;
             freezeConfiguration();
